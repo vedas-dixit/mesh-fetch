@@ -1,0 +1,23 @@
+{
+  "name": "mesh-fetcher",
+  "version": "1.0.0",
+  "description": "A Node.js package for fetching data from multiple APIs with enhanced features.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "keywords": [
+    "api",
+    "fetch",
+    "network",
+    "data",
+    "mesh"
+  ],
+  "author": "Vedas Dixit",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1"
+  }
+}
