@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://media.giphy.com/media/QTfX9Ejfra3ZmNxh6B/giphy.gif" width="400" alt="Fetching API Animation">
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWFoYjVlY3dtNXduZHlxOHVjNGc0OTBqY3hqNXFlMGxvcXp2cW1qOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9IgFLfWUZigjoem4/giphy.gif" width="400" alt="Fetching API Animation">
 </p>
 
 <p align="center">
