@@ -18,12 +18,21 @@
 ---
 
 ## 📌 **Features**
-✅ Lightweight and easy to use  
-✅ Supports **Debounce & Throttle** to optimize API calls  
-✅ Works with **fetch** (no dependencies like axios)  
-✅ Allows **custom headers & configurations**  
-✅ Supports multiple response formats (Array, Object, JSON)  
-✅ **Built-in caching** for faster results  
+### Current Features:
+- ✅ **Lightweight and easy to use**: No dependencies (uses native `fetch`).
+- ✅ **Debounce & Throttle**: Built-in methods to optimize API calls and reduce unnecessary requests.
+- ✅ **Custom Headers & Configurations**: Easily set headers or any additional configurations for the API requests.
+- ✅ **Multiple Response Formats**: Support for `Array`, `Object`, and `JSON` formats.
+- ✅ **Error Handling**: Catch and handle errors gracefully when an API request fails.
+- ✅ **Supports both async/await and promise chaining**: Allows for flexible asynchronous programming.
+
+### Future Features:
+- 🔧 **Built-in Caching**: Cache API responses for faster, repeated requests.
+- 🔧 **Timeout Support**: Control request timeouts for API calls.
+- 🔧 **Request Retry Mechanism**: Automatically retry failed API requests with exponential backoff.
+- 🔧 **Advanced Throttling**: Control API calls based on time or a number of calls.
+- 🔧 **Rate Limiting**: Ensure that you don’t exceed API request limits with automated checks.
+- 🔧 **Request Interceptors**: Ability to add interceptors for requests and responses, similar to Axios.
 
 ---
 
