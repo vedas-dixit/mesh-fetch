@@ -4,20 +4,16 @@
   "description": "A Node.js package for fetching data from multiple APIs with enhanced features.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "jest"
   },
-  "keywords": [
-    "api",
-    "fetch",
-    "network",
-    "data",
-    "mesh"
-  ],
+  "keywords": ["API", "fetch", "debounce", "throttle"],
   "author": "Vedas Dixit",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.8.4",
-    "lodash.debounce": "^4.0.8",
-    "lodash.throttle": "^4.1.1"
+    "axios": "^1.8.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.23.0",
+    "jest": "^29.7.0"
   }
 }
