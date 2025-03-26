@@ -1,4 +1,3 @@
-// src/fetch.js
 async function fetchAPI(url, options = {}) {
     try {
         const response = await fetch(url, options);
@@ -8,5 +7,4 @@ async function fetchAPI(url, options = {}) {
         return { success: false, message: `Error fetching API: ${error.message}` };
     }
 }
-
 module.exports = fetchAPI;

@@ -1,4 +1,3 @@
-// src/responseFormat.js
 function formatResponse(data, format = 'json') {
     if (format === 'array') {
         return Array.isArray(data) ? data : [data];
@@ -7,5 +6,4 @@ function formatResponse(data, format = 'json') {
     }
     return data; // default to JSON
 }
-
 module.exports = formatResponse;
