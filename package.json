@@ -1,6 +1,6 @@
 {
   "name": "mesh-fetcher",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Node.js package for fetching data from multiple APIs with enhanced features.",
   "main": "index.cjs",
   "module": "index.mjs",
@@ -9,21 +9,21 @@
     "test": "jest"
   },
   "jest": {
-  "transform": {
-    "^.+\\.mjs$": "babel-jest",
-    "^.+\\.js$": "babel-jest"
+    "transform": {
+      "^.+\\.mjs$": "babel-jest",
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "mjs",
+      "json",
+      "node"
+    ],
+    "testMatch": [
+      "**/tests/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ]
   },
-  "moduleFileExtensions": [
-    "js",
-    "mjs",
-    "json",
-    "node"
-  ],
-  "testMatch": [
-    "**/tests/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)"
-  ]
-},
   "keywords": [
     "API",
     "fetch",
