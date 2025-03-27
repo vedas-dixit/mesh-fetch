@@ -1,6 +1,6 @@
 {
   "name": "mesh-fetcher",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Node.js package for fetching data from multiple APIs with enhanced features.",
   "type": "module",
   "main": "dist/index.cjs",
