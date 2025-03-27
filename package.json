@@ -4,6 +4,7 @@
   "description": "A Node.js package for fetching data from multiple APIs with enhanced features.",
   "main": "index.cjs",
   "module": "index.mjs",
+  "types": "src/types/index.d.ts",
   "scripts": {
     "test": "jest"
   },
@@ -39,6 +40,7 @@
     "@babel/preset-env": "^7.26.9",
     "babel-jest": "^29.7.0",
     "eslint": "^9.23.0",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3"
   }
 }
