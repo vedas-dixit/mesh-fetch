@@ -46,7 +46,8 @@
   "author": "Vedas Dixit",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.8.4"
+    "axios": "^1.8.4",
+    "mesh-fetcher": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
