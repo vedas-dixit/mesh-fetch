@@ -1,4 +1,5 @@
-const { debounce } = require("../src");
+import { jest } from '@jest/globals';
+import { debounce } from "../src/index.mjs";
 
 jest.useFakeTimers();
 

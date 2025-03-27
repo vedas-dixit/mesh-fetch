@@ -1,4 +1,4 @@
-const formatResponse = require("../src/utils/responseFormat.cjs.js");
+import { formatResponse } from "../src/index.mjs";
 
 describe("formatResponse function", () => {
   test("should return data as an object", () => {

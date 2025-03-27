@@ -1,4 +1,5 @@
-const { throttle } = require("../src");
+import { jest } from '@jest/globals';
+import { throttle } from "../src/index.mjs";
 
 jest.useFakeTimers();
 
@@ -15,6 +16,7 @@ describe("throttle function", () => {
 
     jest.advanceTimersByTime(1000);
     throttledFn();
+
     expect(mockFn).toBeCalledTimes(2);
   });
 });

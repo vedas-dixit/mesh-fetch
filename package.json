@@ -17,7 +17,7 @@
     }
   },
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "tsc && rollup -c",
     "prepare": "npm run build"
   },
