@@ -1,9 +1,9 @@
-export const fetchAPIWithRetry = async (
+export async function fetchAPIWithRetry(
     url: string,
     options: RequestInit = {},
     retries: number = 3,
     delay: number = 400
-  ): Promise<any> => {
+  ): Promise<any> {
     let attempts = 0;
   
     while (attempts < retries) {
