@@ -38,6 +38,6 @@
 
 ## 📦 **Installation**
 ```sh
-npm install meshfetch
+npm install mesh-fetch
 # or
-yarn add meshfetch
+yarn add mesh-fetch
