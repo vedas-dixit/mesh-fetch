@@ -7,15 +7,13 @@ export interface APIResponse<T = any> {
 
 export type ResponseFormatType = 'json' | 'array' | 'object';
 
-export type FormattedResponse<T, F extends ResponseFormatType> = 
-  F extends 'array' ? T[] :
-  F extends 'object' ? Record<string, unknown> :
-  T;
+export type FormattedResponse<T, F extends ResponseFormatType> = F extends 'array'
+  ? T[]
+  : F extends 'object'
+    ? Record<string, unknown>
+    : T;
 
-export function fetchAPI<T = any>(
-  url: string,
-  options?: RequestInit
-): Promise<T | APIResponse<T>>;
+export function fetchAPI<T = any>(url: string, options?: RequestInit): Promise<T | APIResponse<T>>;
 
 export function fetchAPIWithRetry<T = any>(
   url: string,
@@ -34,7 +32,4 @@ export function debounce<T extends (...args: any[]) => void>(
   delay: number
 ): (...args: Parameters<T>) => void;
 
-export function throttle<T extends (...args: any[]) => void>(
-  func: T,
-  limit: number
-): T; 
+export function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T;

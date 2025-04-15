@@ -41,11 +41,7 @@ export default function SearchInput() {
   }, 300);
 
   return (
-    <input 
-      type="text" 
-      onChange={(e) => debouncedSearch(e.target.value)}
-      placeholder="Search..."
-    />
+    <input type="text" onChange={(e) => debouncedSearch(e.target.value)} placeholder="Search..." />
   );
 }
 ```
@@ -77,13 +73,13 @@ import { fetchAPI, formatResponse } from 'mesh-fetcher';
 export default function Products() {
   const fetchProducts = async () => {
     const response = await fetchAPI('https://api.example.com/products');
-    
+
     // Format as array
     const productsArray = formatResponse(response, 'array');
-    
+
     // Format as object
     const productObject = formatResponse(response, 'object');
-    
+
     // Default JSON format
     const jsonResponse = formatResponse(response);
   };
@@ -102,28 +98,28 @@ import { fetchAPI, debounce, throttle, formatResponse } from 'mesh-fetcher';
 export const api = {
   // Basic fetch
   get: (url, options = {}) => fetchAPI(url, { method: 'GET', ...options }),
-  
+
   // POST request
-  post: (url, data, options = {}) => 
-    fetchAPI(url, { 
-      method: 'POST', 
-      body: JSON.stringify(data), 
-      ...options 
+  post: (url, data, options = {}) =>
+    fetchAPI(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      ...options,
     }),
-    
+
   // Debounced search
   search: debounce(async (query) => {
     const response = await fetchAPI(`/api/search?q=${query}`);
     return formatResponse(response, 'array');
   }, 300),
-  
+
   // Throttled updates
   update: throttle(async (data) => {
     return fetchAPI('/api/update', {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
-  }, 1000)
+  }, 1000),
 };
 ```
 
@@ -135,21 +131,21 @@ import { api } from '../lib/api';
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
-  
+
   useEffect(() => {
     const loadProducts = async () => {
       const data = await api.get('/api/products');
       setProducts(data);
     };
-    
+
     loadProducts();
   }, []);
-  
+
   const handleSearch = async (query) => {
     const results = await api.search(query);
     setProducts(results);
   };
-  
+
   const handleUpdate = async (productId, data) => {
     await api.update({ id: productId, ...data });
   };
@@ -165,15 +161,15 @@ import { fetchAPI } from 'mesh-fetcher';
 export async function getServerSideProps({ params }) {
   try {
     const product = await fetchAPI(`https://api.example.com/products/${params.id}`);
-    
+
     return {
       props: {
-        product
-      }
+        product,
+      },
     };
   } catch (error) {
     return {
-      notFound: true
+      notFound: true,
     };
   }
 }
@@ -190,9 +186,9 @@ export default async function handler(req, res) {
     const response = await fetchAPI('https://external-api.com/data', {
       method: req.method,
       headers: req.headers,
-      body: req.body
+      body: req.body,
     });
-    
+
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -203,20 +199,23 @@ export default async function handler(req, res) {
 ## Best Practices
 
 1. **Create a Centralized API Client**
+
    - Define all API calls in one place
    - Easier to maintain and modify
    - Consistent error handling
 
 2. **Use Environment Variables**
+
    ```javascript
    // .env.local
    NEXT_PUBLIC_API_URL=https://api.example.com
-   
+
    // lib/api.js
    const API_URL = process.env.NEXT_PUBLIC_API_URL;
    ```
 
 3. **Error Handling**
+
    ```javascript
    try {
      const data = await api.get('/endpoint');
@@ -231,9 +230,10 @@ export default async function handler(req, res) {
    ```
 
 4. **Loading States**
+
    ```javascript
    const [isLoading, setIsLoading] = useState(false);
-   
+
    const fetchData = async () => {
      setIsLoading(true);
      try {
@@ -263,4 +263,4 @@ export default async function handler(req, res) {
 5. Cache responses when appropriate
 6. Use proper response formatting
 
-This guide covers the basic to advanced usage of mesh-fetcher in Next.js projects. The library is designed to be simple to use while providing powerful features for handling API requests efficiently. 
+This guide covers the basic to advanced usage of mesh-fetcher in Next.js projects. The library is designed to be simple to use while providing powerful features for handling API requests efficiently.

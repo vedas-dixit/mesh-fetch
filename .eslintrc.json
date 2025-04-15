@@ -1,11 +1,11 @@
 {
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "extends": ["eslint:recommended"],
-    "rules": {
-      "no-unused-vars": "warn",
-      "semi": ["error", "always"]
-    }
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "semi": ["error", "always"]
+  }
 }

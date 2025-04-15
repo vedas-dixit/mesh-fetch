@@ -2,3 +2,6 @@ node_modules
 .env
 Temp_gameplan
 dist
+gamePlan
+.DS_Store
+.prettierrc
