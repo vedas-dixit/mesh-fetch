@@ -1,33 +1,40 @@
-declare module 'mesh-fetcher' {
-  export interface FetchOptions extends RequestInit {
-    timeout?: number;
-    retries?: number;
-    retryDelay?: number;
-  }
+// Type definitions for mesh-fetcher
+export interface APIResponse<T = any> {
+  success: boolean;
+  message: string;
+  data?: T;
+}
 
-  export interface ResponseFormat {
-    data: any;
-    status: number;
-    headers: Headers;
-  }
+export type ResponseFormatType = 'json' | 'array' | 'object';
 
-  export function fetchAPI(
-    url: string,
-    options?: FetchOptions
-  ): Promise<ResponseFormat>;
+export type FormattedResponse<T, F extends ResponseFormatType> = 
+  F extends 'array' ? T[] :
+  F extends 'object' ? Record<string, unknown> :
+  T;
 
-  export function debounce<T extends (...args: any[]) => any>(
-    func: T,
-    wait: number
-  ): (...args: Parameters<T>) => void;
+export function fetchAPI<T = any>(
+  url: string,
+  options?: RequestInit
+): Promise<T | APIResponse<T>>;
 
-  export function throttle<T extends (...args: any[]) => any>(
-    func: T,
-    limit: number
-  ): (...args: Parameters<T>) => void;
+export function fetchAPIWithRetry<T = any>(
+  url: string,
+  options?: RequestInit,
+  retries?: number,
+  delay?: number
+): Promise<T | APIResponse<T>>;
 
-  export function formatResponse(
-    data: any,
-    format?: 'json' | 'array' | 'object'
-  ): any;
-} 
+export function formatResponse<T = any, F extends ResponseFormatType = 'json'>(
+  data: T,
+  format?: F
+): FormattedResponse<T, F>;
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  delay: number
+): (...args: Parameters<T>) => void;
+
+export function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number
+): T; 
