@@ -10,3 +10,8 @@ export * from './arrays/uniqueArray';
 export * from './arrays/mergeArrays';
 export * from './arrays/flattenArray';
 export * from './arrays/chunkArray';
+
+// String exports
+export * from './strings/truncateString';
+export * from './strings/capitalizeWords';
+export * from './strings/slugify';

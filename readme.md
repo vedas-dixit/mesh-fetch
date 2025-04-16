@@ -7,8 +7,7 @@
   <h3>A Modern TypeScript Utility Library for API Fetching and Data Manipulation</h3>
 
 [![npm version](https://img.shields.io/npm/v/mesh-fetcher?color=blue&label=npm)](https://www.npmjs.com/package/mesh-fetcher)
-[![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)
-[![License](https://img.shields.io/github/license/your-username/mesh-fetcher?color=red)](LICENSE)
+[![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)\
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://www.typescriptlang.org/)
 
 </div>
@@ -33,6 +32,14 @@
 | `mergeArrays`  | ✅     | Merge multiple arrays with options       |
 | `flattenArray` | ✅     | Flatten nested arrays with depth control |
 | `chunkArray`   | ✅     | Split arrays into smaller chunks         |
+
+### String Utilities
+
+| Feature          | Status | Description                                       |
+| ---------------- | ------ | ------------------------------------------------- |
+| `truncateString` | ✅     | Truncate strings with configurable options        |
+| `capitalizeWords`| ✅     | Capitalize words with customizable rules          |
+| `slugify`        | ✅     | Convert strings to URL-friendly slugs             |
 
 ## 📦 Installation
 
@@ -76,6 +83,23 @@ const flat = flattenArray([1, [2, 3], [4, [5, 6]]]); // [1, 2, 3, 4, 5, 6]
 const chunks = chunkArray([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
 ```
 
+### String Operations
+
+```typescript
+import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
+
+// Truncate long text
+const truncated = truncateString("This is a long sentence that needs truncating", 20); 
+// "This is a long..."
+
+// Capitalize words
+const capitalized = capitalizeWords("hello world"); // "Hello World"
+
+// Create URL-friendly slugs
+const slug = slugify("Hello World & Special Characters!"); // "hello-world-and-special-characters"
+const customSlug = slugify("Hello World", { replacement: '_', strict: true }); // "hello_world"
+```
+
 ## 📚 API Reference
 
 ### Network Utilities
@@ -114,16 +138,39 @@ Flatten a nested array structure with optional depth control.
 
 Split an array into smaller chunks of specified size.
 
+### String Utilities
+
+#### `truncateString(str: string, maxLength: number, options?: TruncateOptions): string`
+
+Truncate a string to a specified length with customizable options:
+- `replacement`: The string to use as replacement (default: "...")
+- `wordBoundary`: Whether to truncate at word boundaries (default: false)
+- `position`: Where to truncate - 'start', 'middle', or 'end' (default: "end")
+
+#### `capitalizeWords(str: string, options?: CapitalizeOptions): string`
+
+Capitalize words in a string with customizable options:
+- `preserveCase`: Whether to preserve existing case in rest of word (default: false)
+- `excludeWords`: Words to exclude from capitalization (default: [])
+- `locale`: Locale to use for capitalization (default: undefined)
+- `onlyFirstWord`: Whether to capitalize only the first word (default: false)
+
+#### `slugify(str: string, options?: SlugifyOptions): string`
+
+Convert a string to a URL-friendly slug with customizable options:
+- `replacement`: Character to use for spaces/special chars (default: "-")
+- `lower`: Convert the slug to lowercase (default: true)
+- `trim`: Remove leading and trailing spaces (default: true)
+- `strict`: Remove all special characters (default: true)
+- `removeSpecialChars`: Remove special characters (default: true)
+- `transliterate`: Convert accented characters to ASCII (default: true)
+- `maxLength`: Maximum length of the generated slug
+- `locale`: Locale to use for transliteration (default: "en-US")
+- `customReplacements`: Custom character mappings
+
 ## 🗺️ Roadmap
 
 ### Coming Soon (v1.1.0)
-
-- 📝 String Utilities
-
-  - `truncateString`: Truncate strings with ellipsis
-  - `slugify`: Convert strings to URL-friendly format
-  - `capitalizeWords`: Capitalize first letter of each word
-  - `isPalindrome`: Check if string is a palindrome
 
 - 🎯 Object Utilities
   - `deepClone`: Deep clone objects
@@ -152,7 +199,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   
-  Made with 💚 by Vedas
+  Made with 💚 by Kurama
   
   ⭐️ Star us on GitHub — it motivates us a lot!
   

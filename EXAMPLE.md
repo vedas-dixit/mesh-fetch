@@ -86,6 +86,38 @@ export default function Products() {
 }
 ```
 
+### 5. String Utilities
+
+```javascript
+// components/ContentFormatter.js
+import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
+
+export default function ContentFormatter({ content, title }) {
+  // Create a URL-friendly slug for the title
+  const urlSlug = slugify(title); // e.g., "My Blog Post!" → "my-blog-post"
+  
+  // Truncate long content for previews
+  const preview = truncateString(content, 150, { 
+    wordBoundary: true,
+    position: 'end'
+  });
+  
+  // Properly capitalize titles
+  const formattedTitle = capitalizeWords(title, {
+    excludeWords: ['and', 'the', 'of', 'in'],
+    preserveCase: false
+  });
+  
+  return (
+    <div>
+      <h2>{formattedTitle}</h2>
+      <a href={`/posts/${urlSlug}`}>Read more</a>
+      <p>{preview}</p>
+    </div>
+  );
+}
+```
+
 ## Advanced Usage
 
 ### 1. API Client Setup (Recommended Pattern)
@@ -196,6 +228,39 @@ export default async function handler(req, res) {
 }
 ```
 
+### 5. URL and Content Formatting in SEO Component
+
+```javascript
+// components/SEO.js
+import Head from 'next/head';
+import { slugify, capitalizeWords, truncateString } from 'mesh-fetcher';
+
+export default function SEO({ title, description, content }) {
+  // Create SEO-friendly title
+  const seoTitle = capitalizeWords(title);
+  
+  // Create meta description with truncated content
+  const metaDescription = description || truncateString(content, 160, { wordBoundary: true });
+  
+  // Create canonical URL with slugified title
+  const canonicalSlug = slugify(title);
+  const canonicalUrl = `https://example.com/articles/${canonicalSlug}`;
+  
+  return (
+    <Head>
+      <title>{seoTitle}</title>
+      <meta name="description" content={metaDescription} />
+      <link rel="canonical" href={canonicalUrl} />
+      
+      {/* Open Graph tags */}
+      <meta property="og:title" content={seoTitle} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:url" content={canonicalUrl} />
+    </Head>
+  );
+}
+```
+
 ## Best Practices
 
 1. **Create a Centralized API Client**
@@ -244,6 +309,19 @@ export default async function handler(req, res) {
    };
    ```
 
+5. **Consistent String Formatting**
+
+   ```javascript
+   // Create a utility function for consistent content formatting
+   const formatContent = (content) => {
+     return {
+       title: capitalizeWords(content.title, { excludeWords: ['the', 'and', 'of'] }),
+       slug: slugify(content.title),
+       excerpt: truncateString(content.body, 120, { wordBoundary: true })
+     };
+   };
+   ```
+
 ## Common Use Cases
 
 1. **Search with Debouncing**
@@ -253,6 +331,8 @@ export default async function handler(req, res) {
 5. **API Proxying**
 6. **Data Caching**
 7. **Rate-limited API Calls**
+8. **SEO-friendly URL generation**
+9. **Content formatting and truncation**
 
 ## Performance Tips
 
@@ -262,5 +342,6 @@ export default async function handler(req, res) {
 4. Use loading states for better UX
 5. Cache responses when appropriate
 6. Use proper response formatting
+7. Pre-generate slugs for dynamic routes
 
-This guide covers the basic to advanced usage of mesh-fetcher in Next.js projects. The library is designed to be simple to use while providing powerful features for handling API requests efficiently.
+This guide covers the basic to advanced usage of mesh-fetcher in Next.js projects. The library is designed to be simple to use while providing powerful features for handling API requests efficiently and formatting content appropriately.

@@ -1,12 +1,21 @@
 # mesh-fetcher Enhancement Roadmap
 
-## Current State (v1.0.1)
+## Current State (v1.1.0)
 
 - Basic API fetching with Axios
 - Debounce and throttle utilities
 - Response formatting (object/array/JSON)
 - Dual module support (ESM/CommonJS)
 - Basic testing infrastructure
+- Array utilities
+  - uniqueArray
+  - mergeArrays
+  - flattenArray
+  - chunkArray
+- String utilities
+  - truncateString
+  - capitalizeWords
+  - slugify
 
 ## Core Enhancement Areas
 
@@ -90,6 +99,16 @@
   - WebSocket fallback
   - Server-Sent Events support
 
+### 9. Object Utilities (High Priority)
+
+- Implement common object manipulation utilities
+  - deepClone: Deep clone objects
+  - mergeObjects: Deep merge multiple objects
+  - isEmptyObject: Check if object is empty
+  - pick/omit: Select or exclude properties
+  - deepEqual: Deep equality comparison
+  - flatten/unflatten: Flatten nested objects
+
 ## Competitive Advantages
 
 ### vs Axios
@@ -116,19 +135,25 @@
 
 ## Implementation Priorities
 
-### Phase 1 (v1.1.0)
+### Phase 1 (v1.1.0) ✅ Completed
 
-1. Smart caching system
-2. Basic retry mechanism
-3. Error handling improvements
+1. ✅ Array utilities implementation
+2. ✅ String utilities implementation
 
 ### Phase 2 (v1.2.0)
+
+1. Object utilities implementation
+2. Smart caching system
+3. Basic retry mechanism
+4. Error handling improvements
+
+### Phase 3 (v1.3.0)
 
 1. Request batching
 2. Rate limiting
 3. Authentication utilities
 
-### Phase 3 (v1.3.0)
+### Phase 4 (v1.4.0)
 
 1. Response transformation
 2. Monitoring tools
@@ -185,5 +210,7 @@
 6. Framework agnostic
 7. Minimal dependencies
 8. Excellent documentation
+9. Comprehensive string and array utilities
+10. Strong type safety
 
 This roadmap will position mesh-fetcher as a robust, modern alternative to existing solutions while focusing on developer experience and real-world use cases.
