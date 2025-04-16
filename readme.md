@@ -1,8 +1,8 @@
 # 🌐 Mesh-Fetch
 
 <div align="center">
-  
-  ![Mesh-Fetch Banner](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWFoYjVlY3dtNXduZHlxOHVjNGc0OTBqY3hqNXFlMGxvcXp2cW1qOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9IgFLfWUZigjoem4/giphy.gif)
+
+![Untitled design](https://github.com/user-attachments/assets/60200ff7-891a-4122-8a7a-40cfedb21299)
 
   <h2>A Modern TypeScript Utility Library for API Fetching and Data Manipulation</h2>
 
