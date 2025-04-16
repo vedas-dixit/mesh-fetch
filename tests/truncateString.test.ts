@@ -51,11 +51,13 @@ describe('truncateString', () => {
 
   // Combined options
   it('should handle multiple options correctly', () => {
-    expect(truncateString('Hello Beautiful World', 12, {
-      replacement: '...',
-      position: 'middle',
-      wordBoundary: true
-    })).toBe('Hello...orld');
+    expect(
+      truncateString('Hello Beautiful World', 12, {
+        replacement: '...',
+        position: 'middle',
+        wordBoundary: true,
+      })
+    ).toBe('Hello...orld');
   });
 
   // Special characters and spaces
@@ -67,8 +69,12 @@ describe('truncateString', () => {
 
   // Input validation
   it('should handle null and undefined inputs', () => {
-    expect(() => truncateString(null as any, 5)).toThrow('Input string cannot be null or undefined');
-    expect(() => truncateString(undefined as any, 5)).toThrow('Input string cannot be null or undefined');
+    expect(() => truncateString(null as any, 5)).toThrow(
+      'Input string cannot be null or undefined'
+    );
+    expect(() => truncateString(undefined as any, 5)).toThrow(
+      'Input string cannot be null or undefined'
+    );
   });
 
   // Long replacement string
@@ -103,4 +109,4 @@ describe('truncateString', () => {
     expect(truncateString('Hello', 2, { replacement: '.' })).toBe('H.');
     expect(truncateString('Hello', 1, { replacement: '.' })).toBe('.');
   });
-}); 
+});

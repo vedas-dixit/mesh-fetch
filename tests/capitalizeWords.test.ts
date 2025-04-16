@@ -17,18 +17,16 @@ describe('capitalizeWords', () => {
   // Excluded words
   it('should handle excluded words', () => {
     const excludeWords = ['and', 'the', 'in', 'on'];
-    expect(capitalizeWords('the cat and the dog', { excludeWords }))
-      .toBe('The Cat and the Dog');
-    expect(capitalizeWords('start the engine', { excludeWords }))
-      .toBe('Start the Engine');
+    expect(capitalizeWords('the cat and the dog', { excludeWords })).toBe('The Cat and the Dog');
+    expect(capitalizeWords('start the engine', { excludeWords })).toBe('Start the Engine');
   });
 
   // Only first word
   it('should handle onlyFirstWord option', () => {
-    expect(capitalizeWords('hello beautiful world', { onlyFirstWord: true }))
-      .toBe('Hello beautiful world');
-    expect(capitalizeWords('THE QUICK BROWN', { onlyFirstWord: true }))
-      .toBe('The quick brown');
+    expect(capitalizeWords('hello beautiful world', { onlyFirstWord: true })).toBe(
+      'Hello beautiful world'
+    );
+    expect(capitalizeWords('THE QUICK BROWN', { onlyFirstWord: true })).toBe('The quick brown');
   });
 
   // Locale support
@@ -39,12 +37,14 @@ describe('capitalizeWords', () => {
 
   // Combined options
   it('should handle multiple options correctly', () => {
-    expect(capitalizeWords('the quick brown fox', {
-      onlyFirstWord: true,
-      preserveCase: true,
-      excludeWords: ['the', 'quick'],
-      locale: 'en-US'
-    })).toBe('The quick brown fox');
+    expect(
+      capitalizeWords('the quick brown fox', {
+        onlyFirstWord: true,
+        preserveCase: true,
+        excludeWords: ['the', 'quick'],
+        locale: 'en-US',
+      })
+    ).toBe('The quick brown fox');
   });
 
   // Special characters and spaces
@@ -65,7 +65,9 @@ describe('capitalizeWords', () => {
   // Input validation
   it('should handle null and undefined inputs', () => {
     expect(() => capitalizeWords(null as any)).toThrow('Input string cannot be null or undefined');
-    expect(() => capitalizeWords(undefined as any)).toThrow('Input string cannot be null or undefined');
+    expect(() => capitalizeWords(undefined as any)).toThrow(
+      'Input string cannot be null or undefined'
+    );
   });
 
   // Edge cases with excluded words
@@ -93,4 +95,4 @@ describe('capitalizeWords', () => {
     expect(capitalizeWords('  hello world  ')).toBe('  Hello World  ');
     expect(capitalizeWords('\thello world\n')).toBe('\tHello World\n');
   });
-}); 
+});

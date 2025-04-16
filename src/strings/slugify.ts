@@ -40,7 +40,7 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
 
   // Handle camelCase - must come before lowercase to work correctly
   result = result.replace(/([a-z])([A-Z])/g, '$1 $2');
-  
+
   // Apply case transformation if requested
   result = lower ? result.toLowerCase() : result;
 
@@ -52,7 +52,7 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
     '%': 'percent',
     '+': 'plus',
     '~': 'tilde',
-    '$': 'dollar',
+    $: 'dollar',
     '¢': 'cent',
     '£': 'pound',
     '¥': 'yen',
@@ -94,21 +94,66 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
     } catch (e) {
       // Fallback if normalize is not supported
       const accentMap: Record<string, string> = {
-        'á': 'a', 'à': 'a', 'ä': 'a', 'â': 'a', 'ã': 'a', 'å': 'a',
-        'é': 'e', 'è': 'e', 'ë': 'e', 'ê': 'e',
-        'í': 'i', 'ì': 'i', 'ï': 'i', 'î': 'i',
-        'ó': 'o', 'ò': 'o', 'ö': 'o', 'ô': 'o', 'õ': 'o',
-        'ú': 'u', 'ù': 'u', 'ü': 'u', 'û': 'u',
-        'ý': 'y', 'ÿ': 'y', 'ç': 'c', 'ñ': 'n',
-        'Á': 'A', 'À': 'A', 'Ä': 'A', 'Â': 'A', 'Ã': 'A', 'Å': 'A',
-        'É': 'E', 'È': 'E', 'Ë': 'E', 'Ê': 'E',
-        'Í': 'I', 'Ì': 'I', 'Ï': 'I', 'Î': 'I',
-        'Ó': 'O', 'Ò': 'O', 'Ö': 'O', 'Ô': 'O', 'Õ': 'O',
-        'Ú': 'U', 'Ù': 'U', 'Ü': 'U', 'Û': 'U',
-        'Ý': 'Y', 'Ÿ': 'Y', 'Ç': 'C', 'Ñ': 'N',
+        á: 'a',
+        à: 'a',
+        ä: 'a',
+        â: 'a',
+        ã: 'a',
+        å: 'a',
+        é: 'e',
+        è: 'e',
+        ë: 'e',
+        ê: 'e',
+        í: 'i',
+        ì: 'i',
+        ï: 'i',
+        î: 'i',
+        ó: 'o',
+        ò: 'o',
+        ö: 'o',
+        ô: 'o',
+        õ: 'o',
+        ú: 'u',
+        ù: 'u',
+        ü: 'u',
+        û: 'u',
+        ý: 'y',
+        ÿ: 'y',
+        ç: 'c',
+        ñ: 'n',
+        Á: 'A',
+        À: 'A',
+        Ä: 'A',
+        Â: 'A',
+        Ã: 'A',
+        Å: 'A',
+        É: 'E',
+        È: 'E',
+        Ë: 'E',
+        Ê: 'E',
+        Í: 'I',
+        Ì: 'I',
+        Ï: 'I',
+        Î: 'I',
+        Ó: 'O',
+        Ò: 'O',
+        Ö: 'O',
+        Ô: 'O',
+        Õ: 'O',
+        Ú: 'U',
+        Ù: 'U',
+        Ü: 'U',
+        Û: 'U',
+        Ý: 'Y',
+        Ÿ: 'Y',
+        Ç: 'C',
+        Ñ: 'N',
       };
-      
-      result = result.split('').map(char => accentMap[char] || char).join('');
+
+      result = result
+        .split('')
+        .map((char) => accentMap[char] || char)
+        .join('');
     }
   }
 
@@ -119,12 +164,12 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
       const escapedChar = char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       // Handle repeating characters (like '...', '&&&', etc.)
       const regex = new RegExp(`${escapedChar}+`, 'g');
-      
+
       // Only add spaces if the replacement is non-empty
       const replacement = word ? ` ${word} ` : ' ';
       result = result.replace(regex, replacement);
     }
-    
+
     // Collapse multiple spaces to single spaces
     result = result.replace(/\s+/g, ' ').trim();
   } else {
@@ -158,7 +203,7 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
   // Apply maximum length if specified
   if (maxLength && maxLength > 0 && result.length > maxLength) {
     result = result.substring(0, maxLength);
-    
+
     // Remove trailing replacement character if present
     if (replacement && result.endsWith(replacement)) {
       result = result.substring(0, result.length - replacement.length);
@@ -166,4 +211,4 @@ export function slugify(str: string, options: SlugifyOptions = {}): string {
   }
 
   return result;
-} 
+}

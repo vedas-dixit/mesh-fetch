@@ -95,19 +95,19 @@ import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
 export default function ContentFormatter({ content, title }) {
   // Create a URL-friendly slug for the title
   const urlSlug = slugify(title); // e.g., "My Blog Post!" → "my-blog-post"
-  
+
   // Truncate long content for previews
-  const preview = truncateString(content, 150, { 
+  const preview = truncateString(content, 150, {
     wordBoundary: true,
-    position: 'end'
+    position: 'end',
   });
-  
+
   // Properly capitalize titles
   const formattedTitle = capitalizeWords(title, {
     excludeWords: ['and', 'the', 'of', 'in'],
-    preserveCase: false
+    preserveCase: false,
   });
-  
+
   return (
     <div>
       <h2>{formattedTitle}</h2>
@@ -238,20 +238,20 @@ import { slugify, capitalizeWords, truncateString } from 'mesh-fetcher';
 export default function SEO({ title, description, content }) {
   // Create SEO-friendly title
   const seoTitle = capitalizeWords(title);
-  
+
   // Create meta description with truncated content
   const metaDescription = description || truncateString(content, 160, { wordBoundary: true });
-  
+
   // Create canonical URL with slugified title
   const canonicalSlug = slugify(title);
   const canonicalUrl = `https://example.com/articles/${canonicalSlug}`;
-  
+
   return (
     <Head>
       <title>{seoTitle}</title>
       <meta name="description" content={metaDescription} />
       <link rel="canonical" href={canonicalUrl} />
-      
+
       {/* Open Graph tags */}
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={metaDescription} />
@@ -317,7 +317,7 @@ export default function SEO({ title, description, content }) {
      return {
        title: capitalizeWords(content.title, { excludeWords: ['the', 'and', 'of'] }),
        slug: slugify(content.title),
-       excerpt: truncateString(content.body, 120, { wordBoundary: true })
+       excerpt: truncateString(content.body, 120, { wordBoundary: true }),
      };
    };
    ```

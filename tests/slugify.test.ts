@@ -72,12 +72,14 @@ describe('slugify', () => {
 
   // Combined options
   it('should handle combined options', () => {
-    expect(slugify('Hello & World!', {
-      replacement: '_',
-      strict: true,
-      lower: true,
-      trim: true
-    })).toBe('hello_and_world');
+    expect(
+      slugify('Hello & World!', {
+        replacement: '_',
+        strict: true,
+        lower: true,
+        trim: true,
+      })
+    ).toBe('hello_and_world');
   });
 
   // Edge cases with special characters
@@ -100,4 +102,4 @@ describe('slugify', () => {
     expect(slugify('Hello  &  @  World')).toBe('hello-and-at-world');
     expect(slugify('Hello...@@@...World')).toBe('hello-at-world');
   });
-}); 
+});

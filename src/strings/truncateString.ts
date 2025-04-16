@@ -52,25 +52,26 @@ export function truncateString(
 
       const leftLength = Math.ceil(actualMaxLength / 2);
       const rightLength = Math.floor(actualMaxLength / 2);
-      
+
       // Find word boundaries if needed
       if (wordBoundary) {
         const leftPart = str.slice(0, leftLength);
         const rightStartIndex = str.length - rightLength;
         const rightPart = str.slice(rightStartIndex);
-        
+
         // Find word boundaries
         const lastSpaceLeft = leftPart.lastIndexOf(' ');
         const firstSpaceRight = rightPart.indexOf(' ');
-        
+
         const leftBoundary = lastSpaceLeft > 0 ? lastSpaceLeft : leftLength;
-        const rightStart = firstSpaceRight >= 0 ? 
-          rightStartIndex + firstSpaceRight + 1 : 
-          rightStartIndex;
-        
-        return str.slice(0, leftBoundary).trimRight() + replacement + str.slice(rightStart).trimLeft();
+        const rightStart =
+          firstSpaceRight >= 0 ? rightStartIndex + firstSpaceRight + 1 : rightStartIndex;
+
+        return (
+          str.slice(0, leftBoundary).trimRight() + replacement + str.slice(rightStart).trimLeft()
+        );
       }
-      
+
       // For non-word-boundary case, ensure even distribution
       const leftPart = str.slice(0, leftLength);
       const rightPart = str.slice(-rightLength);
@@ -83,12 +84,12 @@ export function truncateString(
         // Find the last complete word
         const searchSpace = str.slice(0, actualMaxLength + 1);
         const lastSpace = searchSpace.lastIndexOf(' ');
-        
+
         if (lastSpace > 0) {
           return str.slice(0, lastSpace).trimRight() + replacement;
         }
       }
-      
+
       truncated = str.slice(0, actualMaxLength).trimRight();
       return truncated + replacement;
   }

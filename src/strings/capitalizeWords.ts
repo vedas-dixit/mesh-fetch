@@ -30,7 +30,7 @@ export function capitalizeWords(str: string, options: CapitalizeOptions = {}): s
 
   // Split the string into parts (words and separators)
   const parts = str.split(/([^a-zA-Z0-9\u00C0-\u017F]+)/);
-  
+
   let isFirstWord = true;
   const processedParts = parts.map((part: string) => {
     // If it's a separator, return it unchanged
@@ -45,7 +45,7 @@ export function capitalizeWords(str: string, options: CapitalizeOptions = {}): s
 
     // Check if this is a word that should be excluded
     const isExcluded = lowerExcludeWords.has(part.toLowerCase());
-    
+
     // Handle the first actual word
     if (isFirstWord && part.trim().length > 0) {
       isFirstWord = false;

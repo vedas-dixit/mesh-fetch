@@ -35,11 +35,11 @@
 
 ### String Utilities
 
-| Feature          | Status | Description                                       |
-| ---------------- | ------ | ------------------------------------------------- |
-| `truncateString` | ✅     | Truncate strings with configurable options        |
-| `capitalizeWords`| ✅     | Capitalize words with customizable rules          |
-| `slugify`        | ✅     | Convert strings to URL-friendly slugs             |
+| Feature           | Status | Description                                |
+| ----------------- | ------ | ------------------------------------------ |
+| `truncateString`  | ✅     | Truncate strings with configurable options |
+| `capitalizeWords` | ✅     | Capitalize words with customizable rules   |
+| `slugify`         | ✅     | Convert strings to URL-friendly slugs      |
 
 ## 📦 Installation
 
@@ -89,15 +89,15 @@ const chunks = chunkArray([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
 import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
 
 // Truncate long text
-const truncated = truncateString("This is a long sentence that needs truncating", 20); 
+const truncated = truncateString('This is a long sentence that needs truncating', 20);
 // "This is a long..."
 
 // Capitalize words
-const capitalized = capitalizeWords("hello world"); // "Hello World"
+const capitalized = capitalizeWords('hello world'); // "Hello World"
 
 // Create URL-friendly slugs
-const slug = slugify("Hello World & Special Characters!"); // "hello-world-and-special-characters"
-const customSlug = slugify("Hello World", { replacement: '_', strict: true }); // "hello_world"
+const slug = slugify('Hello World & Special Characters!'); // "hello-world-and-special-characters"
+const customSlug = slugify('Hello World', { replacement: '_', strict: true }); // "hello_world"
 ```
 
 ## 📚 API Reference
@@ -143,6 +143,7 @@ Split an array into smaller chunks of specified size.
 #### `truncateString(str: string, maxLength: number, options?: TruncateOptions): string`
 
 Truncate a string to a specified length with customizable options:
+
 - `replacement`: The string to use as replacement (default: "...")
 - `wordBoundary`: Whether to truncate at word boundaries (default: false)
 - `position`: Where to truncate - 'start', 'middle', or 'end' (default: "end")
@@ -150,6 +151,7 @@ Truncate a string to a specified length with customizable options:
 #### `capitalizeWords(str: string, options?: CapitalizeOptions): string`
 
 Capitalize words in a string with customizable options:
+
 - `preserveCase`: Whether to preserve existing case in rest of word (default: false)
 - `excludeWords`: Words to exclude from capitalization (default: [])
 - `locale`: Locale to use for capitalization (default: undefined)
@@ -158,6 +160,7 @@ Capitalize words in a string with customizable options:
 #### `slugify(str: string, options?: SlugifyOptions): string`
 
 Convert a string to a URL-friendly slug with customizable options:
+
 - `replacement`: Character to use for spaces/special chars (default: "-")
 - `lower`: Convert the slug to lowercase (default: true)
 - `trim`: Remove leading and trailing spaces (default: true)

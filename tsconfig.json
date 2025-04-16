@@ -12,7 +12,8 @@
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "tests"]
