@@ -159,7 +159,7 @@ slugify(str, options);
 <table>
   <tr>
     <td width="50%">
-      <h3 align="center">🔜 Coming in v1.1.0</h3>
+      <h3 align="center">🔜 Coming in v1.1.2+</h3>
       <ul>
         <li>Object utilities (<code>deepClone</code>, <code>mergeObjects</code>, etc.)</li>
         <li>Enhanced data validation methods</li>
