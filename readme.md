@@ -4,54 +4,62 @@
   
   ![Mesh-Fetch Banner](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWFoYjVlY3dtNXduZHlxOHVjNGc0OTBqY3hqNXFlMGxvcXp2cW1qOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9IgFLfWUZigjoem4/giphy.gif)
 
-  <h3>A Modern TypeScript Utility Library for API Fetching and Data Manipulation</h3>
+  <h2>A Modern TypeScript Utility Library for API Fetching and Data Manipulation</h2>
 
-[![npm version](https://img.shields.io/npm/v/mesh-fetcher?color=blue&label=npm)](https://www.npmjs.com/package/mesh-fetcher)
-[![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)\
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://www.typescriptlang.org/)
+  [![npm version](https://img.shields.io/npm/v/mesh-fetcher?color=blue&label=npm)](https://www.npmjs.com/package/mesh-fetcher)
+  [![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://www.typescriptlang.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>
 
-## 🚀 Features
+<div align="center">
+  <p><strong>Elegant, type-safe utilities for modern web development</strong></p>
+  <p>Simplify API interactions, data transformations, and string manipulations with a lightweight, zero-dependency library</p>
+</div>
 
-### Network Utilities
+## ✨ Features
 
-| Feature             | Status | Description                                        |
-| ------------------- | ------ | -------------------------------------------------- |
-| `fetchAPI`          | ✅     | Enhanced fetch with error handling and type safety |
-| `fetchAPIWithRetry` | ✅     | Automatic retry mechanism for failed requests      |
-| `formatResponse`    | ✅     | Format API responses into desired structures       |
-| `debounce`          | ✅     | Prevent function spam with timed delays            |
-| `throttle`          | ✅     | Control execution rate of functions                |
-
-### Array Utilities
-
-| Feature        | Status | Description                              |
-| -------------- | ------ | ---------------------------------------- |
-| `uniqueArray`  | ✅     | Remove duplicates from arrays            |
-| `mergeArrays`  | ✅     | Merge multiple arrays with options       |
-| `flattenArray` | ✅     | Flatten nested arrays with depth control |
-| `chunkArray`   | ✅     | Split arrays into smaller chunks         |
-
-### String Utilities
-
-| Feature           | Status | Description                                |
-| ----------------- | ------ | ------------------------------------------ |
-| `truncateString`  | ✅     | Truncate strings with configurable options |
-| `capitalizeWords` | ✅     | Capitalize words with customizable rules   |
-| `slugify`         | ✅     | Convert strings to URL-friendly slugs      |
+<table>
+  <tr>
+    <td width="33%">
+      <h3 align="center">🌐 Network</h3>
+      <p align="center">
+        <code>fetchAPI</code> • <code>fetchAPIWithRetry</code><br/>
+        <code>formatResponse</code> • <code>debounce</code> • <code>throttle</code>
+      </p>
+    </td>
+    <td width="33%">
+      <h3 align="center">🔄 Arrays</h3>
+      <p align="center">
+        <code>uniqueArray</code> • <code>mergeArrays</code><br/>
+        <code>flattenArray</code> • <code>chunkArray</code>
+      </p>
+    </td>
+    <td width="33%">
+      <h3 align="center">📝 Strings</h3>
+      <p align="center">
+        <code>truncateString</code> • <code>capitalizeWords</code><br/>
+        <code>slugify</code>
+      </p>
+    </td>
+  </tr>
+</table>
 
 ## 📦 Installation
 
 ```bash
+# Using npm
 npm install mesh-fetcher
-# or
+
+# Using yarn
 yarn add mesh-fetcher
-# or
+
+# Using pnpm
 pnpm add mesh-fetcher
 ```
 
-## 🎯 Quick Start
+## 🚀 Quick Start
 
 ### Network Operations
 
@@ -100,99 +108,87 @@ const slug = slugify('Hello World & Special Characters!'); // "hello-world-and-s
 const customSlug = slugify('Hello World', { replacement: '_', strict: true }); // "hello_world"
 ```
 
-## 📚 API Reference
+## 📘 String Utilities API
 
-### Network Utilities
-
-#### `fetchAPI<T>(url: string, options?: RequestInit): Promise<T | APIResponse<T>>`
-
-Enhanced fetch function with built-in error handling and type safety.
-
-#### `fetchAPIWithRetry<T>(url: string, options?: RequestInit, retries?: number, delay?: number)`
-
-Fetch with automatic retry mechanism for failed requests.
-
-#### `debounce<T>(func: T, delay: number): (...args: Parameters<T>) => void`
-
-Create a debounced function that delays invoking the provided function.
-
-#### `throttle<T>(func: T, limit: number): T`
-
-Create a throttled function that limits the rate of execution.
-
-### Array Utilities
-
-#### `uniqueArray<T>(array: T[]): T[]`
-
-Remove duplicate elements from an array.
-
-#### `mergeArrays<T>(array1: T[], array2: T[], options?: { unique: boolean }): T[]`
-
-Merge two arrays with option to remove duplicates.
-
-#### `flattenArray<T>(array: any[], depth?: number): T[]`
-
-Flatten a nested array structure with optional depth control.
-
-#### `chunkArray<T>(array: T[], size: number): T[][]`
-
-Split an array into smaller chunks of specified size.
-
-### String Utilities
-
-#### `truncateString(str: string, maxLength: number, options?: TruncateOptions): string`
+### `truncateString`
 
 Truncate a string to a specified length with customizable options:
 
-- `replacement`: The string to use as replacement (default: "...")
+```typescript
+truncateString(str, maxLength, options);
+```
+
+**Options:**
+- `replacement`: String to use as replacement (default: "...")
 - `wordBoundary`: Whether to truncate at word boundaries (default: false)
 - `position`: Where to truncate - 'start', 'middle', or 'end' (default: "end")
 
-#### `capitalizeWords(str: string, options?: CapitalizeOptions): string`
+### `capitalizeWords`
 
 Capitalize words in a string with customizable options:
 
+```typescript
+capitalizeWords(str, options);
+```
+
+**Options:**
 - `preserveCase`: Whether to preserve existing case in rest of word (default: false)
 - `excludeWords`: Words to exclude from capitalization (default: [])
 - `locale`: Locale to use for capitalization (default: undefined)
 - `onlyFirstWord`: Whether to capitalize only the first word (default: false)
 
-#### `slugify(str: string, options?: SlugifyOptions): string`
+### `slugify`
 
 Convert a string to a URL-friendly slug with customizable options:
 
+```typescript
+slugify(str, options);
+```
+
+**Options:**
 - `replacement`: Character to use for spaces/special chars (default: "-")
 - `lower`: Convert the slug to lowercase (default: true)
 - `trim`: Remove leading and trailing spaces (default: true)
 - `strict`: Remove all special characters (default: true)
-- `removeSpecialChars`: Remove special characters (default: true)
 - `transliterate`: Convert accented characters to ASCII (default: true)
 - `maxLength`: Maximum length of the generated slug
-- `locale`: Locale to use for transliteration (default: "en-US")
 - `customReplacements`: Custom character mappings
 
 ## 🗺️ Roadmap
 
-### Coming Soon (v1.1.0)
+<table>
+  <tr>
+    <td width="50%">
+      <h3 align="center">🔜 Coming in v1.1.0</h3>
+      <ul>
+        <li>Object utilities (<code>deepClone</code>, <code>mergeObjects</code>, etc.)</li>
+        <li>Enhanced data validation methods</li>
+        <li>More string manipulation utilities</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3 align="center">🔮 Future Plans (v1.2.0+)</h3>
+      <ul>
+        <li>Built-in response caching</li>
+        <li>Request timeout control</li>
+        <li>Advanced retry strategies</li>
+        <li>Request/Response interceptors</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-- 🎯 Object Utilities
-  - `deepClone`: Deep clone objects
-  - `mergeObjects`: Deep merge multiple objects
-  - `isEmptyObject`: Check if object is empty
-  - `pick`: Pick specific properties from object
+## 🔧 Contributing
 
-### Future Plans (v1.2.0+)
+We welcome contributions of all sizes! Here's how you can help:
 
-- 🔄 Enhanced Network Features
-  - Built-in response caching
-  - Request timeout control
-  - Rate limiting
-  - Request/Response interceptors
-  - Advanced retry strategies
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+For major changes, please open an issue first to discuss what you'd like to change.
 
 ## 📄 License
 
@@ -202,8 +198,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   
-  Made with 💚 by Kurama
+  <p>Made with 💚 by Kurama</p>
   
-  ⭐️ Star us on GitHub — it motivates us a lot!
+  <p>⭐️ Star us on GitHub — it motivates us a lot!</p>
+  
+  <p>
+    <a href="https://www.npmjs.com/package/mesh-fetcher">npm</a> •
+    <a href="https://github.com/vedas-dixit/mesh-fetch">GitHub</a> •
+    <a href="https://github.com/vedas-dixit/mesh-fetch/issues">Issues</a>
+  </p>
   
 </div>
