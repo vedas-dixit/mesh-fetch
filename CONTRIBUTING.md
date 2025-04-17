@@ -31,7 +31,7 @@ Whether you're fixing a bug, adding a feature, or improving documentation - your
 ```bash
 # Fork this repository
 # Then clone your fork
-git clone https://github.com/your-username/mesh-fetch.git
+git clone https://github.com/vedas-dixit/mesh-fetch.git
 cd mesh-fetch
 
 # Create a new branch
