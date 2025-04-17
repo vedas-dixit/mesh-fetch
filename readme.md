@@ -22,25 +22,33 @@
 
 <table>
   <tr>
-    <td width="33%">
+    <td width="25%">
       <h3 align="center">🌐 Network</h3>
       <p align="center">
         <code>fetchAPI</code> • <code>fetchAPIWithRetry</code><br/>
         <code>formatResponse</code> • <code>debounce</code> • <code>throttle</code>
       </p>
     </td>
-    <td width="33%">
+    <td width="25%">
       <h3 align="center">🔄 Arrays</h3>
       <p align="center">
         <code>uniqueArray</code> • <code>mergeArrays</code><br/>
         <code>flattenArray</code> • <code>chunkArray</code>
       </p>
     </td>
-    <td width="33%">
+    <td width="25%">
       <h3 align="center">📝 Strings</h3>
       <p align="center">
         <code>truncateString</code> • <code>capitalizeWords</code><br/>
         <code>slugify</code>
+      </p>
+    </td>
+    <td width="25%">
+      <h3 align="center">🔧 Objects</h3>
+      <p align="center">
+        <code>deepClone</code> • <code>deepEqual</code><br/>
+        <code>mergeObjects</code> • <code>flattenObject</code><br/>
+        <code>pick</code> • <code>omit</code>
       </p>
     </td>
   </tr>
@@ -108,6 +116,57 @@ const slug = slugify('Hello World & Special Characters!'); // "hello-world-and-s
 const customSlug = slugify('Hello World', { replacement: '_', strict: true }); // "hello_world"
 ```
 
+### Object Operations
+
+```typescript
+import { 
+  deepClone, 
+  deepEqual, 
+  mergeObjects, 
+  flattenObject,
+  pick,
+  omit 
+} from 'mesh-fetcher';
+
+// Deep clone objects with circular references
+const obj = { 
+  date: new Date(),
+  map: new Map([['key', 'value']]),
+  nested: { array: [1, 2, { x: 1 }] }
+};
+const clone = deepClone(obj);
+
+// Deep equality comparison
+const obj1 = { a: 1, b: { x: [1, 2] } };
+const obj2 = { a: 1, b: { x: [1, 2] } };
+const isEqual = deepEqual(obj1, obj2); // true
+
+// Merge objects deeply
+const target = { a: 1, b: { x: 1 } };
+const source = { b: { y: 2 }, c: 3 };
+const merged = mergeObjects(target, source);
+// { a: 1, b: { x: 1, y: 2 }, c: 3 }
+
+// Flatten nested objects
+const nested = {
+  user: {
+    name: 'John',
+    address: { city: 'NY' }
+  }
+};
+const flat = flattenObject(nested);
+// { 'user.name': 'John', 'user.address.city': 'NY' }
+
+// Pick specific properties
+const user = { name: 'John', age: 30, password: '123' };
+const public = pick(user, ['name', 'age']);
+// { name: 'John', age: 30 }
+
+// Omit specific properties
+const safe = omit(user, ['password']);
+// { name: 'John', age: 30 }
+```
+
 ## 📘 String Utilities API
 
 ### `truncateString`
@@ -154,25 +213,92 @@ slugify(str, options);
 - `maxLength`: Maximum length of the generated slug
 - `customReplacements`: Custom character mappings
 
+## 📘 Object Utilities API
+
+### `deepClone`
+
+Create a deep clone of an object with support for special types and circular references:
+
+```typescript
+deepClone(obj, options);
+```
+
+**Options:**
+- `maxDepth`: Maximum depth for recursive operations (default: Infinity)
+- `preservePrototype`: Whether to preserve prototype chain (default: false)
+- `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
+
+### `deepEqual`
+
+Perform a deep equality comparison between two values:
+
+```typescript
+deepEqual(a, b, options);
+```
+
+**Options:**
+- `maxDepth`: Maximum depth for comparison (default: Infinity)
+- `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
+
+### `mergeObjects`
+
+Deeply merge two objects with configurable behavior:
+
+```typescript
+mergeObjects(target, source, options);
+```
+
+**Options:**
+- `arrayMerge`: How to handle arrays ('replace' | 'concat' | 'union') (default: 'replace')
+- `clone`: Whether to clone objects during merge (default: true)
+- `maxDepth`: Maximum depth for merging (default: Infinity)
+- `preservePrototype`: Whether to preserve prototype chain (default: false)
+
+### `flattenObject`
+
+Convert a nested object structure into a flat object with dot notation:
+
+```typescript
+flattenObject(obj, options);
+```
+
+**Options:**
+- `delimiter`: Character to use as delimiter in keys (default: ".")
+- `maxDepth`: Maximum depth to flatten (default: Infinity)
+- `preserveArrays`: Whether to preserve arrays (default: false)
+
+### `pick` and `omit`
+
+Create a new object with selected/omitted properties:
+
+```typescript
+pick(obj, keys, options);
+omit(obj, keys, options);
+```
+
+**Options:**
+- `preservePrototype`: Whether to preserve prototype chain (default: false)
+- `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
+
 ## 🗺️ Roadmap
 
 <table>
   <tr>
     <td width="50%">
-      <h3 align="center">🔜 Coming in v1.1.2+</h3>
-      <ul>
-        <li>Object utilities (<code>deepClone</code>, <code>mergeObjects</code>, etc.)</li>
-        <li>Enhanced data validation methods</li>
-        <li>More string manipulation utilities</li>
-      </ul>
-    </td>
-    <td width="50%">
-      <h3 align="center">🔮 Future Plans (v1.2.0+)</h3>
+      <h3 align="center">🔜 Coming in v1.2.0+</h3>
       <ul>
         <li>Built-in response caching</li>
         <li>Request timeout control</li>
         <li>Advanced retry strategies</li>
         <li>Request/Response interceptors</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3 align="center">✨ Latest in v1.1.2</h3>
+      <ul>
+        <li>Added comprehensive object utilities</li>
+        <li>Enhanced type safety and documentation</li>
+        <li>Improved array utilities with more options</li>
       </ul>
     </td>
   </tr>

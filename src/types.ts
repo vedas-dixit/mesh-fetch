@@ -140,3 +140,164 @@ export declare function truncateString(
 ): string;
 export declare function capitalizeWords(str: string, options?: CapitalizeOptions): string;
 export declare function slugify(str: string, options?: SlugifyOptions): string;
+
+// Object utility types
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+export type Primitive = string | number | boolean | null | undefined;
+
+export interface ObjectUtilOptions {
+  /**
+   * Maximum depth for recursive operations
+   * @default Infinity
+   */
+  maxDepth?: number;
+  /**
+   * Whether to preserve prototype chain
+   * @default false
+   */
+  preservePrototype?: boolean;
+  /**
+   * Whether to include non-enumerable properties
+   * @default false
+   */
+  includeNonEnumerable?: boolean;
+}
+
+export interface MergeOptions extends ObjectUtilOptions {
+  /**
+   * How to handle array merging
+   * @default "replace"
+   */
+  arrayMerge?: 'replace' | 'concat' | 'union';
+  /**
+   * Whether to clone objects during merge
+   * @default true
+   */
+  clone?: boolean;
+}
+
+export interface FlattenOptions {
+  /**
+   * Character to use as delimiter in flattened keys
+   * @default "."
+   */
+  delimiter?: string;
+  /**
+   * Maximum depth to flatten
+   * @default Infinity
+   */
+  maxDepth?: number;
+  /**
+   * Whether to preserve arrays
+   * @default false
+   */
+  preserveArrays?: boolean;
+}
+
+// Object utility function declarations
+export declare function deepClone<T>(obj: T, options?: ObjectUtilOptions): T;
+
+export declare function deepEqual<T>(a: T, b: T, options?: ObjectUtilOptions): boolean;
+
+export declare function mergeObjects<T extends object, U extends object>(
+  target: T,
+  source: U,
+  options?: MergeOptions
+): T & U;
+
+export declare function flattenObject<T extends object>(
+  obj: T,
+  options?: FlattenOptions
+): Record<string, unknown>;
+
+export declare function pick<T extends object, K extends keyof T>(
+  obj: T,
+  keys: K[],
+  options?: ObjectUtilOptions
+): Pick<T, K>;
+
+export declare function omit<T extends object, K extends keyof T>(
+  obj: T,
+  keys: K[],
+  options?: ObjectUtilOptions
+): Omit<T, K>;
+
+// Array utility types
+export interface ArrayUtilOptions {
+  /**
+   * Whether to preserve empty arrays in the result
+   * @default false
+   */
+  preserveEmpty?: boolean;
+  /**
+   * Whether to remove undefined and null values
+   * @default false
+   */
+  removeNulls?: boolean;
+}
+
+export interface FlattenArrayOptions extends ArrayUtilOptions {
+  /**
+   * Maximum depth to flatten. -1 means flatten all levels
+   * @default -1
+   */
+  depth?: number;
+  /**
+   * Whether to preserve arrays at the specified depth
+   * @default false
+   */
+  preserveArrays?: boolean;
+}
+
+export interface MergeArrayOptions extends ArrayUtilOptions {
+  /**
+   * Whether to remove duplicates from the result
+   * @default false
+   */
+  unique?: boolean;
+  /**
+   * Custom comparison function for determining uniqueness
+   * @param a First element to compare
+   * @param b Second element to compare
+   * @returns true if elements are equal
+   */
+  comparator?: <T>(a: T, b: T) => boolean;
+}
+
+export interface ChunkArrayOptions {
+  /**
+   * Whether to pad the last chunk with a fill value if incomplete
+   * @default false
+   */
+  padLastChunk?: boolean;
+  /**
+   * Value to use for padding the last chunk
+   */
+  padValue?: any;
+}
+
+// Array utility function declarations
+export declare function flattenArray<T>(
+  array: Array<T | T[]>,
+  options?: FlattenArrayOptions
+): T[];
+
+export declare function uniqueArray<T>(
+  array: Array<T>,
+  comparator?: (a: T, b: T) => boolean
+): Array<T>;
+
+export declare function mergeArrays<T>(
+  array1: Array<T>,
+  array2: Array<T>,
+  options?: MergeArrayOptions
+): Array<T>;
+
+export declare function chunkArray<T>(
+  array: Array<T>,
+  size: number,
+  options?: ChunkArrayOptions
+): Array<T[]>;

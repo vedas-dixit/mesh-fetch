@@ -1,7 +1,7 @@
-import { uniqueArray } from '../src/arrays/uniqueArray';
-import { mergeArrays } from '../src/arrays/mergeArrays';
-import { flattenArray } from '../src/arrays/flattenArray';
-import { chunkArray } from '../src/arrays/chunkArray';
+import { uniqueArray } from '../../src/arrays/uniqueArray';
+import { mergeArrays } from '../../src/arrays/mergeArrays';
+import { flattenArray } from '../../src/arrays/flattenArray';
+import { chunkArray } from '../../src/arrays/chunkArray';
 import { describe, it, expect } from '@jest/globals';
 
 describe('Array Utilities', () => {

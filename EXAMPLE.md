@@ -1,347 +1,327 @@
-# Using mesh-fetcher in Next.js Projects
+# 🎯 Mesh-Fetcher Examples
 
-## Installation
+<div align="center">
+  <p><strong>Complete guide to using Mesh-Fetcher's powerful utilities in your projects</strong></p>
+</div>
 
-```bash
-npm install mesh-fetcher
-# or
-yarn add mesh-fetcher
-```
+## 📚 Table of Contents
 
-## Basic Usage
+- [🌐 Network Operations](#-network-operations)
+  - [Basic Fetch](#basic-fetch)
+  - [Retry Mechanism](#retry-mechanism)
+  - [Response Formatting](#response-formatting)
+  - [Performance Utilities](#performance-utilities)
+- [📊 Array Utilities](#-array-utilities)
+  - [Array Manipulation](#array-manipulation)
+  - [Array Transformation](#array-transformation)
+- [🔠 String Utilities](#-string-utilities)
+  - [Text Formatting](#text-formatting)
+  - [URL Handling](#url-handling)
+- [🎲 Object Utilities](#-object-utilities)
+  - [Object Manipulation](#object-manipulation)
+  - [Object Transformation](#object-transformation)
+- [🛠️ Advanced Usage](#-advanced-usage)
+  - [Custom Implementations](#custom-implementations)
+  - [Integration Examples](#integration-examples)
 
-### 1. Simple API Fetching
+## 🌐 Network Operations
 
-```javascript
-// pages/index.js
+### Basic Fetch
+```typescript
 import { fetchAPI } from 'mesh-fetcher';
 
-export default function Home() {
-  const fetchData = async () => {
-    try {
-      const response = await fetchAPI('https://api.example.com/data');
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+// Simple GET request
+const users = await fetchAPI('https://api.example.com/users');
+
+// POST request with data
+const newUser = await fetchAPI('https://api.example.com/users', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'John Doe' })
+});
+
+// Error handling
+try {
+  const data = await fetchAPI('https://api.example.com/data');
+  if (!data.success) {
+    console.error(data.message);
+  }
+} catch (error) {
+  console.error('Failed to fetch:', error);
 }
 ```
 
-### 2. With Debouncing (Perfect for Search Inputs)
+### Retry Mechanism
+```typescript
+import { fetchAPIWithRetry } from 'mesh-fetcher';
 
-```javascript
-// components/SearchInput.js
-import { fetchAPI, debounce } from 'mesh-fetcher';
+// Fetch with 3 retries and 1 second delay
+const data = await fetchAPIWithRetry(
+  'https://api.example.com/data',
+  { method: 'GET' },
+  3,  // retries
+  1000 // delay in ms
+);
 
-export default function SearchInput() {
-  const debouncedSearch = debounce(async (query) => {
-    const results = await fetchAPI(`https://api.example.com/search?q=${query}`);
-    // Handle results
-  }, 300);
+// Custom error handling with retries
+try {
+  const response = await fetchAPIWithRetry(
+    'https://api.example.com/unreliable-endpoint',
+    { method: 'POST', body: JSON.stringify({ data: 'test' }) },
+    5,  // More retries for unreliable endpoints
+    2000 // Longer delay
+  );
+  console.log('Success after retries:', response);
+} catch (error) {
+  console.error('All retry attempts failed:', error);
+}
+```
 
+### Performance Utilities
+
+#### Debounce
+```typescript
+import { debounce } from 'mesh-fetcher';
+
+// Debounced search function
+const searchAPI = debounce(async (query: string) => {
+  const results = await fetchAPI(`/api/search?q=${query}`);
+  return results;
+}, 300);
+
+// Usage in React
+function SearchComponent() {
   return (
-    <input type="text" onChange={(e) => debouncedSearch(e.target.value)} placeholder="Search..." />
+    <input
+      type="text"
+      onChange={(e) => searchAPI(e.target.value)}
+      placeholder="Search..."
+    />
   );
 }
 ```
 
-### 3. With Throttling (For Rate-Limited APIs)
+#### Throttle
+```typescript
+import { throttle } from 'mesh-fetcher';
 
-```javascript
-// components/InfiniteScroll.js
-import { fetchAPI, throttle } from 'mesh-fetcher';
+// Throttled update function
+const updateProgress = throttle(async (progress: number) => {
+  await fetchAPI('/api/progress', {
+    method: 'POST',
+    body: JSON.stringify({ progress })
+  });
+}, 1000);
 
-export default function InfiniteScroll() {
-  const throttledFetch = throttle(async (page) => {
-    const data = await fetchAPI(`https://api.example.com/items?page=${page}`);
-    // Handle data
-  }, 1000); // Only fetch once per second
-
-  const loadMore = () => {
-    throttledFetch(currentPage + 1);
-  };
+// Usage
+function trackProgress(progress: number) {
+  updateProgress(progress); // Will only execute once per second
 }
 ```
 
-### 4. Response Formatting
+## 📊 Array Utilities
 
-```javascript
-// pages/products.js
-import { fetchAPI, formatResponse } from 'mesh-fetcher';
+### Array Manipulation
+```typescript
+import {
+  flattenArray,
+  uniqueArray,
+  chunkArray,
+  mergeArrays
+} from 'mesh-fetcher';
 
-export default function Products() {
-  const fetchProducts = async () => {
-    const response = await fetchAPI('https://api.example.com/products');
+// Flatten nested arrays
+const nested = [1, [2, 3], [4, [5, 6]]];
+const flattened = flattenArray(nested);
+console.log(flattened); // [1, 2, 3, 4, 5, 6]
 
-    // Format as array
-    const productsArray = formatResponse(response, 'array');
+// Remove duplicates
+const duplicates = [1, 2, 2, 3, 3, 4];
+const unique = uniqueArray(duplicates);
+console.log(unique); // [1, 2, 3, 4]
 
-    // Format as object
-    const productObject = formatResponse(response, 'object');
+// Create chunks
+const data = [1, 2, 3, 4, 5, 6];
+const chunks = chunkArray(data, 2);
+console.log(chunks); // [[1, 2], [3, 4], [5, 6]]
 
-    // Default JSON format
-    const jsonResponse = formatResponse(response);
-  };
-}
+// Merge arrays with custom logic
+const arr1 = [1, 2, 3];
+const arr2 = [3, 4, 5];
+const merged = mergeArrays(arr1, arr2);
+console.log(merged); // [1, 2, 3, 4, 5]
 ```
 
-### 5. String Utilities
+## 🔠 String Utilities
 
-```javascript
-// components/ContentFormatter.js
-import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
+### Text Formatting
+```typescript
+import {
+  truncateString,
+  capitalizeWords,
+  slugify
+} from 'mesh-fetcher';
 
-export default function ContentFormatter({ content, title }) {
-  // Create a URL-friendly slug for the title
-  const urlSlug = slugify(title); // e.g., "My Blog Post!" → "my-blog-post"
+// Truncate long text
+const longText = "This is a very long text that needs to be truncated";
+const truncated = truncateString(longText, 20);
+console.log(truncated); // "This is a very lon..."
 
-  // Truncate long content for previews
-  const preview = truncateString(content, 150, {
-    wordBoundary: true,
-    position: 'end',
-  });
+// Capitalize words
+const text = "hello world";
+const capitalized = capitalizeWords(text);
+console.log(capitalized); // "Hello World"
 
-  // Properly capitalize titles
-  const formattedTitle = capitalizeWords(title, {
-    excludeWords: ['and', 'the', 'of', 'in'],
-    preserveCase: false,
-  });
+// Create URL-friendly slugs
+const title = "This is a Blog Post Title!";
+const slug = slugify(title);
+console.log(slug); // "this-is-a-blog-post-title"
+```
+
+## 🎲 Object Utilities
+
+### Object Manipulation
+```typescript
+import {
+  deepClone,
+  deepEqual,
+  flattenObject,
+  mergeObjects,
+  omit,
+  pick
+} from 'mesh-fetcher';
+
+// Deep clone objects
+const original = { nested: { value: 42 } };
+const clone = deepClone(original);
+clone.nested.value = 43;
+console.log(original.nested.value); // Still 42
+
+// Compare objects
+const obj1 = { a: 1, b: { c: 2 } };
+const obj2 = { a: 1, b: { c: 2 } };
+console.log(deepEqual(obj1, obj2)); // true
+
+// Flatten nested objects
+const nested = { user: { name: 'John', details: { age: 30 } } };
+const flat = flattenObject(nested);
+console.log(flat); // { 'user.name': 'John', 'user.details.age': 30 }
+
+// Merge objects deeply
+const target = { a: 1, b: { x: 1 } };
+const source = { b: { y: 2 }, c: 3 };
+const merged = mergeObjects(target, source);
+console.log(merged); // { a: 1, b: { x: 1, y: 2 }, c: 3 }
+
+// Pick specific properties
+const user = { id: 1, name: 'John', password: 'secret' };
+const public = pick(user, ['id', 'name']);
+console.log(public); // { id: 1, name: 'John' }
+
+// Omit specific properties
+const userWithoutPassword = omit(user, ['password']);
+console.log(userWithoutPassword); // { id: 1, name: 'John' }
+```
+
+## 🛠️ Advanced Usage
+
+### Custom API Client
+```typescript
+import { fetchAPI, fetchAPIWithRetry } from 'mesh-fetcher';
+
+class APIClient {
+  private baseURL: string;
+  private retryConfig: { attempts: number; delay: number };
+
+  constructor(
+    baseURL: string,
+    retryConfig = { attempts: 3, delay: 1000 }
+  ) {
+    this.baseURL = baseURL;
+    this.retryConfig = retryConfig;
+  }
+
+  async get<T>(endpoint: string) {
+    return fetchAPIWithRetry<T>(
+      `${this.baseURL}${endpoint}`,
+      { method: 'GET' },
+      this.retryConfig.attempts,
+      this.retryConfig.delay
+    );
+  }
+
+  async post<T>(endpoint: string, data: any) {
+    return fetchAPI<T>(`${this.baseURL}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  }
+}
+
+// Usage
+const api = new APIClient('https://api.example.com');
+const users = await api.get('/users');
+const newUser = await api.post('/users', { name: 'John' });
+```
+
+### React Integration
+```typitten
+import { useState, useEffect } from 'react';
+import { fetchAPI, debounce } from 'mesh-fetcher';
+
+// Custom hook for data fetching
+function useFetch<T>(url: string) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchAPI<T>(url);
+        setData(response);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+// Search component with debouncing
+function SearchComponent() {
+  const [results, setResults] = useState([]);
+  
+  const searchAPI = debounce(async (query: string) => {
+    const data = await fetchAPI(`/api/search?q=${query}`);
+    setResults(data);
+  }, 300);
 
   return (
     <div>
-      <h2>{formattedTitle}</h2>
-      <a href={`/posts/${urlSlug}`}>Read more</a>
-      <p>{preview}</p>
+      <input
+        type="text"
+        onChange={(e) => searchAPI(e.target.value)}
+        placeholder="Search..."
+      />
+      <ul>
+        {results.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 ```
 
-## Advanced Usage
+---
 
-### 1. API Client Setup (Recommended Pattern)
-
-```javascript
-// lib/api.js
-import { fetchAPI, debounce, throttle, formatResponse } from 'mesh-fetcher';
-
-// Create a reusable API client
-export const api = {
-  // Basic fetch
-  get: (url, options = {}) => fetchAPI(url, { method: 'GET', ...options }),
-
-  // POST request
-  post: (url, data, options = {}) =>
-    fetchAPI(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      ...options,
-    }),
-
-  // Debounced search
-  search: debounce(async (query) => {
-    const response = await fetchAPI(`/api/search?q=${query}`);
-    return formatResponse(response, 'array');
-  }, 300),
-
-  // Throttled updates
-  update: throttle(async (data) => {
-    return fetchAPI('/api/update', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }, 1000),
-};
-```
-
-### 2. Using in Components
-
-```javascript
-// components/ProductList.js
-import { api } from '../lib/api';
-
-export default function ProductList() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      const data = await api.get('/api/products');
-      setProducts(data);
-    };
-
-    loadProducts();
-  }, []);
-
-  const handleSearch = async (query) => {
-    const results = await api.search(query);
-    setProducts(results);
-  };
-
-  const handleUpdate = async (productId, data) => {
-    await api.update({ id: productId, ...data });
-  };
-}
-```
-
-### 3. Server-Side Usage (getServerSideProps)
-
-```javascript
-// pages/products/[id].js
-import { fetchAPI } from 'mesh-fetcher';
-
-export async function getServerSideProps({ params }) {
-  try {
-    const product = await fetchAPI(`https://api.example.com/products/${params.id}`);
-
-    return {
-      props: {
-        product,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
-}
-```
-
-### 4. API Route Usage
-
-```javascript
-// pages/api/proxy.js
-import { fetchAPI } from 'mesh-fetcher';
-
-export default async function handler(req, res) {
-  try {
-    const response = await fetchAPI('https://external-api.com/data', {
-      method: req.method,
-      headers: req.headers,
-      body: req.body,
-    });
-
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-```
-
-### 5. URL and Content Formatting in SEO Component
-
-```javascript
-// components/SEO.js
-import Head from 'next/head';
-import { slugify, capitalizeWords, truncateString } from 'mesh-fetcher';
-
-export default function SEO({ title, description, content }) {
-  // Create SEO-friendly title
-  const seoTitle = capitalizeWords(title);
-
-  // Create meta description with truncated content
-  const metaDescription = description || truncateString(content, 160, { wordBoundary: true });
-
-  // Create canonical URL with slugified title
-  const canonicalSlug = slugify(title);
-  const canonicalUrl = `https://example.com/articles/${canonicalSlug}`;
-
-  return (
-    <Head>
-      <title>{seoTitle}</title>
-      <meta name="description" content={metaDescription} />
-      <link rel="canonical" href={canonicalUrl} />
-
-      {/* Open Graph tags */}
-      <meta property="og:title" content={seoTitle} />
-      <meta property="og:description" content={metaDescription} />
-      <meta property="og:url" content={canonicalUrl} />
-    </Head>
-  );
-}
-```
-
-## Best Practices
-
-1. **Create a Centralized API Client**
-
-   - Define all API calls in one place
-   - Easier to maintain and modify
-   - Consistent error handling
-
-2. **Use Environment Variables**
-
-   ```javascript
-   // .env.local
-   NEXT_PUBLIC_API_URL=https://api.example.com
-
-   // lib/api.js
-   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-   ```
-
-3. **Error Handling**
-
-   ```javascript
-   try {
-     const data = await api.get('/endpoint');
-   } catch (error) {
-     // Handle different types of errors
-     if (error.status === 404) {
-       // Handle not found
-     } else if (error.status === 429) {
-       // Handle rate limiting
-     }
-   }
-   ```
-
-4. **Loading States**
-
-   ```javascript
-   const [isLoading, setIsLoading] = useState(false);
-
-   const fetchData = async () => {
-     setIsLoading(true);
-     try {
-       const data = await api.get('/endpoint');
-     } finally {
-       setIsLoading(false);
-     }
-   };
-   ```
-
-5. **Consistent String Formatting**
-
-   ```javascript
-   // Create a utility function for consistent content formatting
-   const formatContent = (content) => {
-     return {
-       title: capitalizeWords(content.title, { excludeWords: ['the', 'and', 'of'] }),
-       slug: slugify(content.title),
-       excerpt: truncateString(content.body, 120, { wordBoundary: true }),
-     };
-   };
-   ```
-
-## Common Use Cases
-
-1. **Search with Debouncing**
-2. **Infinite Scroll with Throttling**
-3. **Form Submissions**
-4. **Real-time Updates**
-5. **API Proxying**
-6. **Data Caching**
-7. **Rate-limited API Calls**
-8. **SEO-friendly URL generation**
-9. **Content formatting and truncation**
-
-## Performance Tips
-
-1. Use debouncing for search inputs
-2. Use throttling for frequent updates
-3. Implement proper error boundaries
-4. Use loading states for better UX
-5. Cache responses when appropriate
-6. Use proper response formatting
-7. Pre-generate slugs for dynamic routes
-
-This guide covers the basic to advanced usage of mesh-fetcher in Next.js projects. The library is designed to be simple to use while providing powerful features for handling API requests efficiently and formatting content appropriately.
+<div align="center">
+  <p>For more examples and detailed documentation, visit our <a href="https://github.com/vedas-dixit/mesh-fetch">GitHub repository</a>.</p>
+</div>

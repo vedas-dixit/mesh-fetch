@@ -15,3 +15,11 @@ export * from './arrays/chunkArray';
 export * from './strings/truncateString';
 export * from './strings/capitalizeWords';
 export * from './strings/slugify';
+
+// object exports
+export * from './objects/deepClone';
+export * from './objects/deepEqual';
+export * from './objects/flattenObject';
+export * from './objects/mergeObjects';
+export * from './objects/omit';
+export * from './objects/pick';
