@@ -141,24 +141,7 @@ export function pick<T extends object>(
                 if (!(rootProp in result)) {
                     result[rootProp] = Array.isArray(obj[rootProp as keyof T]) ? [] : {};
                 }
-                if (segments.includes('*') && Array.isArray(value)) {
-                    const lastProp = segments[segments.length - 1];
-                    const parentPath = segments.slice(0, -1);
-                    let current = result;
-                    for (const seg of parentPath) {
-                        if (seg === '*') continue;
-                        if (!(seg in current)) {
-                            current[seg] = [];
-                        }
-                        current = current[seg];
-                    }
-                    if (Array.isArray(current)) {
-                        current.length = 0;
-                        current.push(...value.map(v => ({ [lastProp]: v })));
-                    }
-                } else {
-                    setValueByPath(result, segments, value);
-                }
+                setValueByPath(result, segments, value);
             }
         }
     }
