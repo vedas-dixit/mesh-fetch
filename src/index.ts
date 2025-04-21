@@ -4,6 +4,7 @@ export * from './network/throttle';
 export * from './network/fetchAPI';
 export * from './network/fetchApiWithRetry';
 export * from './network/formatResponse';
+export * from './network/fetchWithCache';
 
 // Array exports
 export * from './arrays/uniqueArray';
