@@ -79,6 +79,135 @@ try {
 
 ### Performance Utilities
 
+#### Caching
+```typescript
+import { fetchWithCache } from 'mesh-fetcher';
+
+// Basic usage with memory cache
+const getData = async () => {
+  const data = await fetchWithCache('https://api.example.com/data', {
+    cacheTTL: 1000 * 60 * 5, // 5 minutes cache
+    cacheType: 'memory'
+  });
+  console.log('Cached data:', data);
+};
+
+// Using LRU cache for frequently accessed data
+const getUserProfile = async (userId: string) => {
+  return fetchWithCache(`https://api.example.com/users/${userId}`, {
+    cacheType: 'lru',
+    forceRefresh: false
+  });
+};
+
+// Persistent cache for offline-first functionality
+const getAppConfig = async () => {
+  try {
+    const config = await fetchWithCache('https://api.example.com/config', {
+      cacheType: 'persistent',
+      storage: 'localStorage',
+      cacheTTL: 1000 * 60 * 60 * 24 // 24 hours cache
+    });
+    return config;
+  } catch (error) {
+    console.error('Failed to fetch config:', error);
+    return null;
+  }
+};
+
+// Real-world example: Caching user data in a React component
+function UserProfile({ userId }: { userId: string }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await fetchWithCache(
+          `https://api.example.com/users/${userId}`,
+          {
+            cacheType: 'persistent',
+            cacheTTL: 1000 * 60 * 30, // 30 minutes cache
+            forceRefresh: false, // Use cache if available
+            fetchOptions: {
+              headers: {
+                'Authorization': 'Bearer token'
+              }
+            }
+          }
+        );
+        setUser(userData);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>Error loading user</div>;
+  
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+
+// Advanced usage: Cache with custom error handling and refresh
+const fetchWithRetryAndCache = async <T>(url: string): Promise<T> => {
+  try {
+    // Try to get from cache first
+    const data = await fetchWithCache<T>(url, {
+      cacheType: 'persistent',
+      cacheTTL: 1000 * 60 * 60, // 1 hour cache
+      forceRefresh: false
+    });
+    return data;
+  } catch (error) {
+    console.warn('Cache miss or error, fetching fresh data...');
+    
+    // If cache fails, force a fresh fetch with retry
+    return fetchWithCache<T>(url, {
+      forceRefresh: true,
+      fetchOptions: {
+        headers: { 'Cache-Control': 'no-cache' }
+      }
+    });
+  }
+};
+
+// Usage in a service class
+class DataService {
+  private cache: typeof fetchWithCache;
+
+  constructor() {
+    this.cache = fetchWithCache;
+  }
+
+  async getResource<T>(id: string): Promise<T> {
+    return this.cache<T>(
+      `https://api.example.com/resources/${id}`,
+      {
+        cacheType: 'lru',
+        cacheTTL: 1000 * 60 * 15, // 15 minutes cache
+        fetchOptions: {
+          credentials: 'include'
+        }
+      }
+    );
+  }
+
+  async clearResourceCache(id: string): Promise<void> {
+    // Force a fresh fetch to update cache
+    await this.getResource(id, { forceRefresh: true });
+  }
+}
+
 #### Debounce
 ```typescript
 import { debounce } from 'mesh-fetcher';

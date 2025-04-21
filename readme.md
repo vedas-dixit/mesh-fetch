@@ -18,6 +18,15 @@
   <p>Simplify API interactions, data transformations, and string manipulations with a lightweight, zero-dependency library</p>
 </div>
 
+<div align="center">
+  <p>
+    <a href="EXAMPLE.md">
+      <img src="https://img.shields.io/badge/📚_Comprehensive_Guide-View_Examples-40B883?style=for-the-badge" alt="View Examples" />
+    </a>
+  </p>
+  <p><sub>Explore our comprehensive guide with real-world examples and best practices</sub></p>
+</div>
+
 ## ✨ Features
 
 <table>
