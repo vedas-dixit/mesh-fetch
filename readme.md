@@ -26,7 +26,7 @@
       <h3 align="center">🌐 Network</h3>
       <p align="center">
         <code>fetchAPI</code> • <code>fetchAPIWithRetry</code><br/>
-        <code>formatResponse</code> • <code>debounce</code> • <code>throttle</code>
+        <code>formatResponse</code> • <code>debounce</code> • <code>throttle</code> • <code>fetchWithCasche</code>
       </p>
     </td>
     <td width="25%">
@@ -72,7 +72,7 @@ pnpm add mesh-fetcher
 ### Network Operations
 
 ```typescript
-import { fetchAPI, debounce } from 'mesh-fetcher';
+import { fetchAPI, debounce, fetchWithCache } from 'mesh-fetcher';
 
 // Simple API fetch with error handling
 const getData = async () => {
@@ -82,6 +82,28 @@ const getData = async () => {
 
 // Debounced API call
 const debouncedFetch = debounce(getData, 300);
+
+// Cached API call with multiple cache strategies
+const getCachedData = async () => {
+  // Using memory cache (default)
+  const memoryData = await fetchWithCache('https://api.example.com/data', {
+    cacheTTL: 1000 * 60 * 5, // 5 minutes cache
+    cacheType: 'memory'
+  });
+
+  // Using LRU cache
+  const lruData = await fetchWithCache('https://api.example.com/data', {
+    cacheType: 'lru',
+    forceRefresh: false // Use cached data if available
+  });
+
+  // Using persistent cache (localStorage)
+  const persistentData = await fetchWithCache('https://api.example.com/data', {
+    cacheType: 'persistent',
+    storage: 'localStorage',
+    cacheTTL: 1000 * 60 * 60 * 24 // 24 hours cache
+  });
+};
 ```
 
 ### Array Operations
@@ -280,29 +302,32 @@ omit(obj, keys, options);
 - `preservePrototype`: Whether to preserve prototype chain (default: false)
 - `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
 
-## 🗺️ Roadmap
+## 📘 Network Utilities API
 
-<table>
-  <tr>
-    <td width="50%">
-      <h3 align="center">🔜 Coming in v1.2.0+</h3>
-      <ul>
-        <li>Built-in response caching</li>
-        <li>Request timeout control</li>
-        <li>Advanced retry strategies</li>
-        <li>Request/Response interceptors</li>
-      </ul>
-    </td>
-    <td width="50%">
-      <h3 align="center">✨ Latest in v1.1.2</h3>
-      <ul>
-        <li>Added comprehensive object utilities</li>
-        <li>Enhanced type safety and documentation</li>
-        <li>Improved array utilities with more options</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+### `fetchWithCache`
+
+Fetch data from an API with built-in caching support:
+
+```typescript
+fetchWithCache<T>(url: string, options?: CacheOptions): Promise<T>
+```
+
+**Options:**
+- `cacheTTL`: Time-to-live for cache in milliseconds (default: 24 hours)
+- `forceRefresh`: Whether to bypass cache and force a fresh API call (default: false)
+- `cacheType`: Type of cache to use - 'memory' | 'lru' | 'persistent' (default: 'memory')
+- `storage`: Storage type for persistent cache - 'localStorage' | 'indexedDB' (default: 'localStorage')
+- `fetchOptions`: Additional fetch options to pass to the underlying fetch call
+
+**Features:**
+- Three cache strategies:
+  - Memory: Simple in-memory Map-based cache
+  - LRU (Least Recently Used): Efficient cache with automatic eviction of old entries
+  - Persistent: localStorage-based cache that persists across sessions
+- Automatic cache invalidation based on TTL
+- Type-safe responses with TypeScript generics
+- Handles complex data types and serialization
+- Automatic error handling and retries
 
 ## 🔧 Contributing
 
