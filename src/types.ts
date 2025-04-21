@@ -301,3 +301,20 @@ export declare function chunkArray<T>(
   size: number,
   options?: ChunkArrayOptions
 ): Array<T[]>;
+
+export interface CacheStore {
+  get(key: string): any;
+  set(key: string, value: any): void;
+  delete(key: string): void;
+  clear(): void;
+}
+
+export type CacheType = 'memory' | 'lru' | 'persistent';
+
+export interface CacheOptions {
+  cacheTTL?: number;
+  forceRefresh?: boolean;
+  cacheType?: CacheType;
+  storage?: 'localStorage' | 'indexedDB';
+  fetchOptions?: RequestInit;
+}
