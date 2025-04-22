@@ -69,11 +69,11 @@ export class PersistentCache implements CacheStore {
 
     if (Array.isArray(value)) {
       // Check if it's a Map
-      if (value.every(item => Array.isArray(item) && item.length === 2)) {
+      if (value.every((item) => Array.isArray(item) && item.length === 2)) {
         return new Map(value);
       }
       // Regular array
-      return value.map(item => this.deserializeValue(item));
+      return value.map((item) => this.deserializeValue(item));
     }
 
     if (typeof value === 'object') {
@@ -93,7 +93,7 @@ export class PersistentCache implements CacheStore {
     try {
       const value = this.storage.getItem(key);
       if (!value) return null;
-      
+
       try {
         return this.deserializeValue(JSON.parse(value));
       } catch (parseError) {
@@ -116,10 +116,12 @@ export class PersistentCache implements CacheStore {
     } catch (error) {
       if (error instanceof Error) {
         const errorMessage = error.message || '';
-        if (error.name === 'QuotaExceededError' || 
-            errorMessage.includes('QuotaExceeded') ||
-            errorMessage.includes('exceeded') ||
-            errorMessage.includes('quota')) {
+        if (
+          error.name === 'QuotaExceededError' ||
+          errorMessage.includes('QuotaExceeded') ||
+          errorMessage.includes('exceeded') ||
+          errorMessage.includes('quota')
+        ) {
           const e = new Error('QuotaExceededError');
           e.name = 'QuotaExceededError';
           throw e;

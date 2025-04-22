@@ -27,6 +27,7 @@
 ## 🌐 Network Operations
 
 ### Basic Fetch
+
 ```typescript
 import { fetchAPI } from 'mesh-fetcher';
 
@@ -37,7 +38,7 @@ const users = await fetchAPI('https://api.example.com/users');
 const newUser = await fetchAPI('https://api.example.com/users', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name: 'John Doe' })
+  body: JSON.stringify({ name: 'John Doe' }),
 });
 
 // Error handling
@@ -52,6 +53,7 @@ try {
 ```
 
 ### Retry Mechanism
+
 ```typescript
 import { fetchAPIWithRetry } from 'mesh-fetcher';
 
@@ -59,7 +61,7 @@ import { fetchAPIWithRetry } from 'mesh-fetcher';
 const data = await fetchAPIWithRetry(
   'https://api.example.com/data',
   { method: 'GET' },
-  3,  // retries
+  3, // retries
   1000 // delay in ms
 );
 
@@ -68,7 +70,7 @@ try {
   const response = await fetchAPIWithRetry(
     'https://api.example.com/unreliable-endpoint',
     { method: 'POST', body: JSON.stringify({ data: 'test' }) },
-    5,  // More retries for unreliable endpoints
+    5, // More retries for unreliable endpoints
     2000 // Longer delay
   );
   console.log('Success after retries:', response);
@@ -80,7 +82,8 @@ try {
 ### Performance Utilities
 
 #### Caching
-```typescript
+
+````typescript
 import { fetchWithCache } from 'mesh-fetcher';
 
 // Basic usage with memory cache
@@ -149,7 +152,7 @@ function UserProfile({ userId }: { userId: string }) {
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <div>Error loading user</div>;
-  
+
   return (
     <div>
       <h1>{user.name}</h1>
@@ -170,7 +173,7 @@ const fetchWithRetryAndCache = async <T>(url: string): Promise<T> => {
     return data;
   } catch (error) {
     console.warn('Cache miss or error, fetching fresh data...');
-    
+
     // If cache fails, force a fresh fetch with retry
     return fetchWithCache<T>(url, {
       forceRefresh: true,
@@ -228,9 +231,10 @@ function SearchComponent() {
     />
   );
 }
-```
+````
 
 #### Throttle
+
 ```typescript
 import { throttle } from 'mesh-fetcher';
 
@@ -238,7 +242,7 @@ import { throttle } from 'mesh-fetcher';
 const updateProgress = throttle(async (progress: number) => {
   await fetchAPI('/api/progress', {
     method: 'POST',
-    body: JSON.stringify({ progress })
+    body: JSON.stringify({ progress }),
   });
 }, 1000);
 
@@ -251,13 +255,9 @@ function trackProgress(progress: number) {
 ## 📊 Array Utilities
 
 ### Array Manipulation
+
 ```typescript
-import {
-  flattenArray,
-  uniqueArray,
-  chunkArray,
-  mergeArrays
-} from 'mesh-fetcher';
+import { flattenArray, uniqueArray, chunkArray, mergeArrays } from 'mesh-fetcher';
 
 // Flatten nested arrays
 const nested = [1, [2, 3], [4, [5, 6]]];
@@ -284,25 +284,22 @@ console.log(merged); // [1, 2, 3, 4, 5]
 ## 🔠 String Utilities
 
 ### Text Formatting
+
 ```typescript
-import {
-  truncateString,
-  capitalizeWords,
-  slugify
-} from 'mesh-fetcher';
+import { truncateString, capitalizeWords, slugify } from 'mesh-fetcher';
 
 // Truncate long text
-const longText = "This is a very long text that needs to be truncated";
+const longText = 'This is a very long text that needs to be truncated';
 const truncated = truncateString(longText, 20);
 console.log(truncated); // "This is a very lon..."
 
 // Capitalize words
-const text = "hello world";
+const text = 'hello world';
 const capitalized = capitalizeWords(text);
 console.log(capitalized); // "Hello World"
 
 // Create URL-friendly slugs
-const title = "This is a Blog Post Title!";
+const title = 'This is a Blog Post Title!';
 const slug = slugify(title);
 console.log(slug); // "this-is-a-blog-post-title"
 ```
@@ -310,15 +307,9 @@ console.log(slug); // "this-is-a-blog-post-title"
 ## 🎲 Object Utilities
 
 ### Object Manipulation
+
 ```typescript
-import {
-  deepClone,
-  deepEqual,
-  flattenObject,
-  mergeObjects,
-  omit,
-  pick
-} from 'mesh-fetcher';
+import { deepClone, deepEqual, flattenObject, mergeObjects, omit, pick } from 'mesh-fetcher';
 
 // Deep clone objects
 const original = { nested: { value: 42 } };
@@ -355,6 +346,7 @@ console.log(userWithoutPassword); // { id: 1, name: 'John' }
 ## 🛠️ Advanced Usage
 
 ### Custom API Client
+
 ```typescript
 import { fetchAPI, fetchAPIWithRetry } from 'mesh-fetcher';
 
@@ -362,10 +354,7 @@ class APIClient {
   private baseURL: string;
   private retryConfig: { attempts: number; delay: number };
 
-  constructor(
-    baseURL: string,
-    retryConfig = { attempts: 3, delay: 1000 }
-  ) {
+  constructor(baseURL: string, retryConfig = { attempts: 3, delay: 1000 }) {
     this.baseURL = baseURL;
     this.retryConfig = retryConfig;
   }
@@ -383,7 +372,7 @@ class APIClient {
     return fetchAPI<T>(`${this.baseURL}${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
   }
 }
@@ -395,6 +384,7 @@ const newUser = await api.post('/users', { name: 'John' });
 ```
 
 ### React Integration
+
 ```typitten
 import { useState, useEffect } from 'react';
 import { fetchAPI, debounce } from 'mesh-fetcher';
@@ -426,7 +416,7 @@ function useFetch<T>(url: string) {
 // Search component with debouncing
 function SearchComponent() {
   const [results, setResults] = useState([]);
-  
+
   const searchAPI = debounce(async (query: string) => {
     const data = await fetchAPI(`/api/search?q=${query}`);
     setResults(data);

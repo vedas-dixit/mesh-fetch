@@ -4,7 +4,10 @@ import { LRUCache } from './cache/lruCache';
 import { PersistentCache } from './cache/persistentCache';
 
 export class CacheFactory {
-  static createCache(cacheType: CacheType = 'memory', storageType: 'localStorage' | 'indexedDB' = 'localStorage'): CacheStore {
+  static createCache(
+    cacheType: CacheType = 'memory',
+    storageType: 'localStorage' | 'indexedDB' = 'localStorage'
+  ): CacheStore {
     switch (cacheType) {
       case 'memory':
         return new MemoryCache();

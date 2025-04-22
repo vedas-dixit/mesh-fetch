@@ -6,10 +6,10 @@
 
   <h2>A Modern TypeScript Utility Library for API Fetching and Data Manipulation</h2>
 
-  [![npm version](https://img.shields.io/npm/v/mesh-fetcher?color=blue&label=npm)](https://www.npmjs.com/package/mesh-fetcher)
-  [![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://www.typescriptlang.org/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/mesh-fetcher?color=blue&label=npm)](https://www.npmjs.com/package/mesh-fetcher)
+[![Downloads](https://img.shields.io/npm/dt/mesh-fetcher?color=green&label=downloads)](https://www.npmjs.com/package/mesh-fetcher)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>
 
@@ -97,20 +97,20 @@ const getCachedData = async () => {
   // Using memory cache (default)
   const memoryData = await fetchWithCache('https://api.example.com/data', {
     cacheTTL: 1000 * 60 * 5, // 5 minutes cache
-    cacheType: 'memory'
+    cacheType: 'memory',
   });
 
   // Using LRU cache
   const lruData = await fetchWithCache('https://api.example.com/data', {
     cacheType: 'lru',
-    forceRefresh: false // Use cached data if available
+    forceRefresh: false, // Use cached data if available
   });
 
   // Using persistent cache (localStorage)
   const persistentData = await fetchWithCache('https://api.example.com/data', {
     cacheType: 'persistent',
     storage: 'localStorage',
-    cacheTTL: 1000 * 60 * 60 * 24 // 24 hours cache
+    cacheTTL: 1000 * 60 * 60 * 24, // 24 hours cache
   });
 };
 ```
@@ -150,20 +150,13 @@ const customSlug = slugify('Hello World', { replacement: '_', strict: true }); /
 ### Object Operations
 
 ```typescript
-import { 
-  deepClone, 
-  deepEqual, 
-  mergeObjects, 
-  flattenObject,
-  pick,
-  omit 
-} from 'mesh-fetcher';
+import { deepClone, deepEqual, mergeObjects, flattenObject, pick, omit } from 'mesh-fetcher';
 
 // Deep clone objects with circular references
-const obj = { 
+const obj = {
   date: new Date(),
   map: new Map([['key', 'value']]),
-  nested: { array: [1, 2, { x: 1 }] }
+  nested: { array: [1, 2, { x: 1 }] },
 };
 const clone = deepClone(obj);
 
@@ -182,8 +175,8 @@ const merged = mergeObjects(target, source);
 const nested = {
   user: {
     name: 'John',
-    address: { city: 'NY' }
-  }
+    address: { city: 'NY' },
+  },
 };
 const flat = flattenObject(nested);
 // { 'user.name': 'John', 'user.address.city': 'NY' }
@@ -209,6 +202,7 @@ truncateString(str, maxLength, options);
 ```
 
 **Options:**
+
 - `replacement`: String to use as replacement (default: "...")
 - `wordBoundary`: Whether to truncate at word boundaries (default: false)
 - `position`: Where to truncate - 'start', 'middle', or 'end' (default: "end")
@@ -222,6 +216,7 @@ capitalizeWords(str, options);
 ```
 
 **Options:**
+
 - `preserveCase`: Whether to preserve existing case in rest of word (default: false)
 - `excludeWords`: Words to exclude from capitalization (default: [])
 - `locale`: Locale to use for capitalization (default: undefined)
@@ -236,6 +231,7 @@ slugify(str, options);
 ```
 
 **Options:**
+
 - `replacement`: Character to use for spaces/special chars (default: "-")
 - `lower`: Convert the slug to lowercase (default: true)
 - `trim`: Remove leading and trailing spaces (default: true)
@@ -255,6 +251,7 @@ deepClone(obj, options);
 ```
 
 **Options:**
+
 - `maxDepth`: Maximum depth for recursive operations (default: Infinity)
 - `preservePrototype`: Whether to preserve prototype chain (default: false)
 - `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
@@ -268,6 +265,7 @@ deepEqual(a, b, options);
 ```
 
 **Options:**
+
 - `maxDepth`: Maximum depth for comparison (default: Infinity)
 - `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
 
@@ -280,6 +278,7 @@ mergeObjects(target, source, options);
 ```
 
 **Options:**
+
 - `arrayMerge`: How to handle arrays ('replace' | 'concat' | 'union') (default: 'replace')
 - `clone`: Whether to clone objects during merge (default: true)
 - `maxDepth`: Maximum depth for merging (default: Infinity)
@@ -294,6 +293,7 @@ flattenObject(obj, options);
 ```
 
 **Options:**
+
 - `delimiter`: Character to use as delimiter in keys (default: ".")
 - `maxDepth`: Maximum depth to flatten (default: Infinity)
 - `preserveArrays`: Whether to preserve arrays (default: false)
@@ -308,6 +308,7 @@ omit(obj, keys, options);
 ```
 
 **Options:**
+
 - `preservePrototype`: Whether to preserve prototype chain (default: false)
 - `includeNonEnumerable`: Whether to include non-enumerable properties (default: false)
 
@@ -322,6 +323,7 @@ fetchWithCache<T>(url: string, options?: CacheOptions): Promise<T>
 ```
 
 **Options:**
+
 - `cacheTTL`: Time-to-live for cache in milliseconds (default: 24 hours)
 - `forceRefresh`: Whether to bypass cache and force a fresh API call (default: false)
 - `cacheType`: Type of cache to use - 'memory' | 'lru' | 'persistent' (default: 'memory')
@@ -329,6 +331,7 @@ fetchWithCache<T>(url: string, options?: CacheOptions): Promise<T>
 - `fetchOptions`: Additional fetch options to pass to the underlying fetch call
 
 **Features:**
+
 - Three cache strategies:
   - Memory: Simple in-memory Map-based cache
   - LRU (Least Recently Used): Efficient cache with automatic eviction of old entries

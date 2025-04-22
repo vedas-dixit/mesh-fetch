@@ -8,6 +8,7 @@
 ## 🎯 Ground Rules
 
 ### 🌟 The Basics
+
 - Be kind and respectful to others
 - Write meaningful commit messages
 - Follow our coding standards
@@ -16,6 +17,7 @@
 - Have fun! 🎨
 
 ### 💪 You Can Do This!
+
 Whether you're fixing a bug, adding a feature, or improving documentation - your contribution matters! Here's how you can help:
 
 - 🐛 Report bugs
@@ -28,6 +30,7 @@ Whether you're fixing a bug, adding a feature, or improving documentation - your
 ## 🚀 Getting Started
 
 ### 1. Fork & Clone
+
 ```bash
 # Fork this repository
 # Then clone your fork
@@ -41,6 +44,7 @@ git checkout -b fix/bug-fix
 ```
 
 ### 2. Set Up Development Environment
+
 ```bash
 # Install dependencies
 npm install
@@ -52,6 +56,7 @@ npm test
 ## 📝 Code Style Guidelines
 
 ### TypeScript
+
 - Use TypeScript for all new code
 - Add proper type definitions
 - Follow existing patterns in the codebase
@@ -76,6 +81,7 @@ async function fetch(id) {
 ```
 
 ### Testing
+
 - Write tests for new features
 - Update tests for bug fixes
 - Aim for good test coverage
@@ -103,6 +109,7 @@ describe('fetchAPI', () => {
 5. 🚀 Submit your PR
 
 ### PR Title Format
+
 ```
 feat: Add new awesome feature
 fix: Resolve API timeout issue
@@ -175,4 +182,4 @@ By contributing, you agree that your contributions will be licensed under the sa
 <div align="center">
   <p>Happy coding! 🎉</p>
   <p>Remember: Every great feature started with a single line of code. Your contribution could be next! 🚀</p>
-</div> 
+</div>

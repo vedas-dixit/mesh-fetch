@@ -1,10 +1,10 @@
-import { fetchAPI } from "./fetchAPI";
-import { CacheFactory } from "../utils/cacheFactory";
-import { CacheOptions, APIResponse } from "../types";
+import { fetchAPI } from './fetchAPI';
+import { CacheFactory } from '../utils/cacheFactory';
+import { CacheOptions, APIResponse } from '../types';
 
 export const fetchWithCache = async <T>(url: string, options: CacheOptions = {}): Promise<T> => {
   const {
-    cacheTTL = 1000 * 60 * 60 * 24, 
+    cacheTTL = 1000 * 60 * 60 * 24,
     forceRefresh = false,
     cacheType = 'memory',
     storage = 'localStorage',
@@ -27,7 +27,7 @@ export const fetchWithCache = async <T>(url: string, options: CacheOptions = {})
 
   try {
     const response = await fetchAPI<T>(url, fetchOptions);
-    
+
     // Handle API response
     if (response && typeof response === 'object') {
       const apiResponse = response as APIResponse<T>;

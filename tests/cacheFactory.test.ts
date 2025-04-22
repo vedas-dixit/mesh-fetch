@@ -60,4 +60,4 @@ describe('CacheFactory', () => {
     const cache = CacheFactory.createCache('persistent', 'localStorage');
     expect(cache).toBeInstanceOf(PersistentCache);
   });
-}); 
+});

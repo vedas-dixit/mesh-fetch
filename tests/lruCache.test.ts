@@ -36,7 +36,7 @@ describe('LRUCache', () => {
 
     // Access key1, making it most recently used
     cache.get('key1');
-    
+
     // Add new item, should evict key2 instead of key1
     cache.set('key4', 'value4');
 
@@ -53,7 +53,7 @@ describe('LRUCache', () => {
 
     // Update key1, making it most recently used
     cache.set('key1', 'new value1');
-    
+
     // Add new item, should evict key2
     cache.set('key4', 'value4');
 
@@ -81,9 +81,9 @@ describe('LRUCache', () => {
     const complexObject = {
       id: 1,
       data: { name: 'test' },
-      date: new Date()
+      date: new Date(),
     };
-    
+
     cache.set('complex', complexObject);
     expect(cache.get('complex')).toEqual(complexObject);
   });
@@ -91,7 +91,7 @@ describe('LRUCache', () => {
   it('should handle null and undefined values', () => {
     cache.set('null', null);
     cache.set('undefined', undefined);
-    
+
     expect(cache.get('null')).toBeNull();
     expect(cache.get('undefined')).toBeUndefined();
   });
@@ -99,7 +99,7 @@ describe('LRUCache', () => {
   it('should maintain size limit strictly', () => {
     const maxSize = 100;
     const largeCache = new LRUCache(maxSize);
-    
+
     // Fill cache beyond max size
     for (let i = 0; i < maxSize + 10; i++) {
       largeCache.set(`key${i}`, `value${i}`);
@@ -112,7 +112,7 @@ describe('LRUCache', () => {
         count++;
       }
     }
-    
+
     expect(count).toBe(maxSize);
   });
-}); 
+});

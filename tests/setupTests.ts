@@ -42,7 +42,7 @@ const localStorageMock = {
 
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-  writable: true
+  writable: true,
 });
 
 // Mock performance.now()
@@ -60,4 +60,4 @@ beforeEach(() => {
   jest.clearAllMocks();
   localStorageMock.clear();
   (global.fetch as jest.Mock).mockClear();
-}); 
+});

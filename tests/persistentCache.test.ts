@@ -52,16 +52,16 @@ describe('PersistentCache', () => {
       id: 1,
       data: { nested: true },
       date: new Date('2024-01-01'),
-      array: [1, 2, 3]
+      array: [1, 2, 3],
     };
 
     const serializedObject = {
       ...complexObject,
-      date: complexObject.date.toISOString()
+      date: complexObject.date.toISOString(),
     };
 
     localStorageMock.getItem.mockReturnValue(JSON.stringify(serializedObject));
-    
+
     cache.set('complex', complexObject);
     const result = cache.get('complex');
 
@@ -76,14 +76,14 @@ describe('PersistentCache', () => {
     // Test null
     cache.set('null', null);
     expect(localStorageMock.setItem).toHaveBeenCalledWith('null', 'null');
-    
+
     localStorageMock.getItem.mockReturnValue('null');
     expect(cache.get('null')).toBeNull();
 
     // Test undefined
     cache.set('undefined', undefined);
     expect(localStorageMock.setItem).toHaveBeenCalledWith('undefined', 'null');
-    
+
     localStorageMock.getItem.mockReturnValue('null');
     expect(cache.get('undefined')).toBeNull();
   });
@@ -107,22 +107,22 @@ describe('PersistentCache', () => {
       date: new Date('2024-01-01'),
       regexp: /test/,
       map: new Map([['key', 'value']]),
-      set: new Set([1, 2, 3])
+      set: new Set([1, 2, 3]),
     };
 
     const expectedData = {
       date: specialData.date.toISOString(),
       regexp: specialData.regexp.toString(),
       map: Array.from(specialData.map.entries()),
-      set: Array.from(specialData.set)
+      set: Array.from(specialData.set),
     };
 
     cache.set('special', specialData);
-    
+
     const retrieved = cache.get('special');
     expect(retrieved.date).toBe(expectedData.date);
     expect(retrieved.regexp).toBe(expectedData.regexp);
     expect(retrieved.map).toEqual(expectedData.map);
     expect(retrieved.set).toEqual(expectedData.set);
   });
-}); 
+});

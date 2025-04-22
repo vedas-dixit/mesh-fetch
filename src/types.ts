@@ -280,10 +280,7 @@ export interface ChunkArrayOptions {
 }
 
 // Array utility function declarations
-export declare function flattenArray<T>(
-  array: Array<T | T[]>,
-  options?: FlattenArrayOptions
-): T[];
+export declare function flattenArray<T>(array: Array<T | T[]>, options?: FlattenArrayOptions): T[];
 
 export declare function uniqueArray<T>(
   array: Array<T>,
